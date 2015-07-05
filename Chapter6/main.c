@@ -1,7 +1,7 @@
-#include "MergeLinkSort.h"
+#include "PQueue.h"
 
 int main()
 {
-	TestMergeLinkSort();
+	TestPQueue();
 	return 0;
 }
