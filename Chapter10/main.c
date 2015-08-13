@@ -19,14 +19,14 @@ int main()
 	//TestStackQueue();
 	//TestQueueStack();
 	//TestSingleStackQueue();
-	TestSingleQueueStack();
+	//TestSingleQueueStack();
 	//TestLinkList();
 	//TestDLinkList();
 	//TestNLinkList();
 	//TestLinkStack();
 	//TestLinkQueue();
 	//TestFreeList();
-	//TestBTree();
+	TestBTree();
 	//TestBTreeHeap();
 	return 0;
 }
