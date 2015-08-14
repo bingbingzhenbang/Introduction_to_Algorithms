@@ -18,6 +18,15 @@ void TreeQueueLevelOrderVisit(BTreeNodePtr ptr, visit pVisit);
 
 void TreeEasyInOrderVisit(BTreeNodePtr ptr, visit pVisit);
 
+BTreeNodePtr TreeSearch(BTreeNodePtr ptr, DataType key);
+BTreeNodePtr IterativeTreeSearch(BTreeNodePtr ptr, DataType key);
+
+BTreeNodePtr TreeMinimum(BTreeNodePtr ptr);
+BTreeNodePtr TreeMaximum(BTreeNodePtr ptr);
+
+BTreeNodePtr TreeSuccessor(BTreeNodePtr ptr);
+
+
 void TestBTree();
 
 #endif // BTREE_H

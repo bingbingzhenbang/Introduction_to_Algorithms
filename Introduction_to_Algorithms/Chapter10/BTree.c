@@ -192,6 +192,8 @@ void TreeEasyInOrderVisit(BTreeNodePtr ptr, visit pVisit)
 			}
 			while (1)
 			{
+				if (p == ptr)
+					return;
 				if (p == p->m_parent->m_left)
 				{
 					pVisit(p->m_parent);
@@ -202,12 +204,61 @@ void TreeEasyInOrderVisit(BTreeNodePtr ptr, visit pVisit)
 					}
 				}
 				p = p->m_parent;
-				if (p==ptr)
-					return;
 			}
 		}
 	}
 	return;
+}
+
+BTreeNodePtr TreeSearch(BTreeNodePtr ptr, DataType key)
+{
+	if (ptr==NULL || ptr->m_data == key)
+		return ptr;
+	if (key < ptr->m_data)
+		return TreeSearch(ptr->m_left, key);
+	else
+		return TreeSearch(ptr->m_right, key);
+}
+
+BTreeNodePtr IterativeTreeSearch(BTreeNodePtr ptr, DataType key)
+{
+	while (ptr != NULL && ptr->m_data != key)
+	{
+		if (key < ptr->m_data)
+			ptr = ptr->m_left;
+		else
+			ptr = ptr->m_right;
+	}
+	return ptr;
+}
+
+BTreeNodePtr TreeMinimum(BTreeNodePtr ptr)
+{
+	while (ptr->m_left != NULL)
+		ptr = ptr->m_left;
+	return ptr;
+}
+
+BTreeNodePtr TreeMaximum(BTreeNodePtr ptr)
+{
+	while (ptr->m_right != NULL)
+		ptr = ptr->m_right;
+	return ptr;
+}
+
+BTreeNodePtr TreeSuccessor(BTreeNodePtr ptr)
+{
+	BTreeNodePtr y;
+	if (ptr->m_right != NULL)
+		return TreeMinimum(ptr->m_right);
+
+	y = ptr->m_parent;
+	while (y != NULL && ptr == y->m_right)
+	{
+		ptr = y;
+		y = y->m_parent;
+	}
+	return y;
 }
 
 void TestBTree()
