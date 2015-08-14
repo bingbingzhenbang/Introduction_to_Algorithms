@@ -234,12 +234,28 @@ BTreeNodePtr IterativeTreeSearch(BTreeNodePtr ptr, DataType key)
 
 BTreeNodePtr TreeMinimum(BTreeNodePtr ptr)
 {
+	if (ptr->m_left == NULL)
+		return ptr;
+	else
+		return TreeMinimum(ptr->m_left);
+}
+
+BTreeNodePtr TreeMaximum(BTreeNodePtr ptr)
+{
+	if (ptr->m_right == NULL)
+		return ptr;
+	else
+		return TreeMaximum(ptr->m_right);
+}
+
+BTreeNodePtr IterativeTreeMinimum(BTreeNodePtr ptr)
+{
 	while (ptr->m_left != NULL)
 		ptr = ptr->m_left;
 	return ptr;
 }
 
-BTreeNodePtr TreeMaximum(BTreeNodePtr ptr)
+BTreeNodePtr IterativeTreeMaximum(BTreeNodePtr ptr)
 {
 	while (ptr->m_right != NULL)
 		ptr = ptr->m_right;
@@ -250,10 +266,25 @@ BTreeNodePtr TreeSuccessor(BTreeNodePtr ptr)
 {
 	BTreeNodePtr y;
 	if (ptr->m_right != NULL)
-		return TreeMinimum(ptr->m_right);
+		return IterativeTreeMinimum(ptr->m_right);
 
 	y = ptr->m_parent;
 	while (y != NULL && ptr == y->m_right)
+	{
+		ptr = y;
+		y = y->m_parent;
+	}
+	return y;
+}
+
+BTreeNodePtr TreePredecessor(BTreeNodePtr ptr)
+{
+	BTreeNodePtr y;
+	if (ptr->m_left != NULL)
+		return IterativeTreeMaximum(ptr->m_left);
+
+	y = ptr->m_parent;
+	while (y != NULL && ptr == y->m_left)
 	{
 		ptr = y;
 		y = y->m_parent;
