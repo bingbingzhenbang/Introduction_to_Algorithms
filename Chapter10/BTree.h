@@ -23,9 +23,11 @@ BTreeNodePtr IterativeTreeSearch(BTreeNodePtr ptr, DataType key);
 
 BTreeNodePtr TreeMinimum(BTreeNodePtr ptr);
 BTreeNodePtr TreeMaximum(BTreeNodePtr ptr);
+BTreeNodePtr IterativeTreeMinimum(BTreeNodePtr ptr);
+BTreeNodePtr IterativeTreeMaximum(BTreeNodePtr ptr);
 
 BTreeNodePtr TreeSuccessor(BTreeNodePtr ptr);
-
+BTreeNodePtr TreePredecessor(BTreeNodePtr ptr);
 
 void TestBTree();
 
