@@ -303,7 +303,7 @@ void TreeIterativeInOrderVisit(BTreeNodePtr ptr, visit pVisit)
 	return;
 }
 
-void TreeInsert(BTreeNodePtr *pRoot, BTreeNodePtr z)
+void IterativeTreeInsert(BTreeNodePtr *pRoot, BTreeNodePtr z)
 {
 	BTreeNodePtr y = NULL, x = *pRoot;
 	if (z == NULL)
@@ -329,7 +329,7 @@ void TreeInsert(BTreeNodePtr *pRoot, BTreeNodePtr z)
 	}
 }
 
-void TreeDelete(BTreeNodePtr pRoot, BTreeNodePtr z)
+void IterativeTreeDelete(BTreeNodePtr pRoot, BTreeNodePtr z)
 {
 	if (pRoot == NULL || z == NULL)
 		return;
@@ -337,19 +337,22 @@ void TreeDelete(BTreeNodePtr pRoot, BTreeNodePtr z)
 
 }
 
-
 void TestBTree()
 {
 	BTreeNodePtr pRoot=0, pNode=0;
 	DataType key;
-	printf("input key:\n");
-	scanf("%d", &key);
+	FILE *fp = fopen("bintree_input", "r");
+	if (!fp)
+	{
+		printf("Cannot open input file!");
+		return;
+	}
+	fscanf(fp, "%ld", &key);
 	while (key != -1)
 	{
 		pNode = MakeNode(key);
-        TreeInsert(&pRoot, pNode);
-		printf("input key:\n");
-		scanf("%d", &key);
+        IterativeTreeInsert(&pRoot, pNode);
+		fscanf(fp, "%ld", &key);
 	}
 	printf("InOrder:\n");
 	//TreeInOrderVisit(pRoot, PrintNode);
