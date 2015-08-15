@@ -5,7 +5,7 @@
 
 int NodeCount(BTreeNodePtr ptr);
 
-BTreeNodePtr AddTree(BTreeNodePtr ptr, DataType key);
+//BTreeNodePtr AddTree(BTreeNodePtr ptr, DataType key);
 void DestructTree(BTreeNodePtr ptr);
 void TreeInOrderVisit(BTreeNodePtr ptr, visit pVisit);
 void TreePreOrderVisit(BTreeNodePtr ptr, visit pVisit);
@@ -30,6 +30,10 @@ BTreeNodePtr TreeSuccessor(BTreeNodePtr ptr);
 BTreeNodePtr TreePredecessor(BTreeNodePtr ptr);
 
 void TreeIterativeInOrderVisit(BTreeNodePtr ptr, visit pVisit);
+
+//in these two function node count will no longer be used
+void TreeInsert(BTreeNodePtr *pRoot, BTreeNodePtr ptr);
+void TreeDelete(BTreeNodePtr *pRoot, BTreeNodePtr ptr);
 
 void TestBTree();
 
