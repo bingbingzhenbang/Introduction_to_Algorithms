@@ -11,26 +11,26 @@ int NodeCount(BTreeNodePtr ptr)
 	return cnt;
 }
 
-BTreeNodePtr AddTree(BTreeNodePtr ptr, DataType key)
-{
-	if (ptr==0)
-	{
-		ptr = MakeNode(key);
-	}
-	else if (key == ptr->m_data)
-		++ptr->m_count;
-	else if (key < ptr->m_data)
-	{
-		ptr->m_left = AddTree(ptr->m_left, key);
-		ptr->m_left->m_parent = ptr;
-	}
-	else if (key > ptr->m_data)
-	{
-		ptr->m_right = AddTree(ptr->m_right, key);
-		ptr->m_right->m_parent = ptr;
-	}
-	return ptr;
-}
+//BTreeNodePtr AddTree(BTreeNodePtr ptr, DataType key)
+//{
+//	if (ptr==0)
+//	{
+//		ptr = MakeNode(key);
+//	}
+//	else if (key == ptr->m_data)
+//		++ptr->m_count;
+//	else if (key < ptr->m_data)
+//	{
+//		ptr->m_left = AddTree(ptr->m_left, key);
+//		ptr->m_left->m_parent = ptr;
+//	}
+//	else if (key > ptr->m_data)
+//	{
+//		ptr->m_right = AddTree(ptr->m_right, key);
+//		ptr->m_right->m_parent = ptr;
+//	}
+//	return ptr;
+//}
 
 void DestructTree(BTreeNodePtr ptr)
 {
@@ -303,34 +303,71 @@ void TreeIterativeInOrderVisit(BTreeNodePtr ptr, visit pVisit)
 	return;
 }
 
+void TreeInsert(BTreeNodePtr *pRoot, BTreeNodePtr z)
+{
+	BTreeNodePtr y = NULL, x = *pRoot;
+	if (z == NULL)
+		return;
+	while (x != NULL)
+	{
+		y = x;
+		if (z->m_data < x->m_data)
+			x = x->m_left;
+		else
+			x = x->m_right;
+	}
+	z->m_parent = y;
+
+	if (y == NULL)
+		*pRoot = z;
+	else
+	{
+		if (z->m_data < y->m_data)
+			y->m_left = z;
+		else
+			y->m_right = z;
+	}
+}
+
+void TreeDelete(BTreeNodePtr pRoot, BTreeNodePtr z)
+{
+	if (pRoot == NULL || z == NULL)
+		return;
+
+
+}
+
+
 void TestBTree()
 {
-	BTreeNodePtr pRoot=0;
+	BTreeNodePtr pRoot=0, pNode=0;
 	DataType key;
 	printf("input key:\n");
 	scanf("%d", &key);
 	while (key != -1)
 	{
-		pRoot = AddTree(pRoot, key);
+		pNode = MakeNode(key);
+        TreeInsert(&pRoot, pNode);
 		printf("input key:\n");
 		scanf("%d", &key);
 	}
 	printf("InOrder:\n");
-	TreeInOrderVisit(pRoot, PrintNode);
-	printf("Stack InOrder:\n");
-	TreeStackInOrderVisit(pRoot, PrintNode);
-	printf("Easy InOrder:\n");
-	TreeEasyInOrderVisit(pRoot, PrintNode);
-	printf("PreOrder:\n");
-	TreePreOrderVisit(pRoot, PrintNode);
-	printf("Stack PreOrder:\n");
-	TreeStackPreOrderVisit(pRoot, PrintNode);
-	printf("PostOrder:\n");
-	TreePostOrderVisit(pRoot, PrintNode);
-	printf("Stack PostOrder:\n");
-	TreeStackPostOrderVisit(pRoot, PrintNode);
-	printf("Level Order:\n");
-	TreeQueueLevelOrderVisit(pRoot, PrintNode);
+	//TreeInOrderVisit(pRoot, PrintNode);
+	//printf("Stack InOrder:\n");
+	//TreeStackInOrderVisit(pRoot, PrintNode);
+	//printf("Easy InOrder:\n");
+	//TreeEasyInOrderVisit(pRoot, PrintNode);
+	//printf("PreOrder:\n");
+	//TreePreOrderVisit(pRoot, PrintNode);
+	//printf("Stack PreOrder:\n");
+	//TreeStackPreOrderVisit(pRoot, PrintNode);
+	//printf("PostOrder:\n");
+	//TreePostOrderVisit(pRoot, PrintNode);
+	//printf("Stack PostOrder:\n");
+	//TreeStackPostOrderVisit(pRoot, PrintNode);
+	//printf("Level Order:\n");
+	//TreeQueueLevelOrderVisit(pRoot, PrintNode);
+	TreeIterativeInOrderVisit(pRoot, PrintNode);
 	DestructTree(pRoot);
 	return;
 }
