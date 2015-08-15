@@ -29,6 +29,8 @@ BTreeNodePtr IterativeTreeMaximum(BTreeNodePtr ptr);
 BTreeNodePtr TreeSuccessor(BTreeNodePtr ptr);
 BTreeNodePtr TreePredecessor(BTreeNodePtr ptr);
 
+void TreeIterativeInOrderVisit(BTreeNodePtr ptr, visit pVisit);
+
 void TestBTree();
 
 #endif // BTREE_H

@@ -292,6 +292,17 @@ BTreeNodePtr TreePredecessor(BTreeNodePtr ptr)
 	return y;
 }
 
+void TreeIterativeInOrderVisit(BTreeNodePtr ptr, visit pVisit)
+{
+	BTreeNodePtr x = IterativeTreeMinimum(ptr);
+	while (x != NULL)
+	{
+		pVisit(x);
+		x = TreeSuccessor(x);
+	}
+	return;
+}
+
 void TestBTree()
 {
 	BTreeNodePtr pRoot=0;
