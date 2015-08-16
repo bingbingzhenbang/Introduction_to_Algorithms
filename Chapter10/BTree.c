@@ -363,6 +363,23 @@ BTreeNodePtr IterativeTreeDelete(BTreeNodePtr *pRoot, BTreeNodePtr z)
 	return y;
 }
 
+BTreeNodePtr TreeInsert(BTreeNodePtr pRoot, BTreeNodePtr ptr)
+{
+	if (pRoot == NULL)
+		pRoot = ptr;
+	else if (ptr->m_data < pRoot->m_data)
+	{
+		pRoot->m_left = TreeInsert(pRoot->m_left, ptr);
+		pRoot->m_left->m_parent = pRoot;
+	}
+	else
+	{
+		pRoot->m_right = TreeInsert(pRoot->m_right, ptr);
+		pRoot->m_right->m_parent = pRoot;
+	}
+	return pRoot;
+}
+
 void TestBTree()
 {
 	BTreeNodePtr pRoot=0, pNode=0, temp;
@@ -377,7 +394,8 @@ void TestBTree()
 	while (key != -1)
 	{
 		pNode = MakeNode(key);
-        IterativeTreeInsert(&pRoot, pNode);
+//        IterativeTreeInsert(&pRoot, pNode);
+		pRoot = TreeInsert(pRoot, pNode);
 		fscanf(fp, "%ld", &key);
 	}
 	printf("InOrder:\n");
