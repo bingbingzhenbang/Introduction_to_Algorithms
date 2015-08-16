@@ -329,22 +329,48 @@ void IterativeTreeInsert(BTreeNodePtr *pRoot, BTreeNodePtr z)
 	}
 }
 
-void IterativeTreeDelete(BTreeNodePtr pRoot, BTreeNodePtr z)
+BTreeNodePtr IterativeTreeDelete(BTreeNodePtr *pRoot, BTreeNodePtr z)
 {
-	if (pRoot == NULL || z == NULL)
-		return;
+	BTreeNodePtr y, x;
+	if (z->m_left == NULL || z->m_right == NULL)
+		y = z;
+	else
+		y = TreeSuccessor(z);
 
+	if (y->m_left != NULL)
+		x = y->m_left;
+	else
+		x = y->m_right;
 
+	if (x != NULL)
+		x->m_parent = y->m_parent;
+
+	if (y->m_parent == NULL)
+		*pRoot = x;
+	else
+	{
+		if (y == y->m_parent->m_left)
+			y->m_parent->m_left = x;
+		else
+			y->m_parent->m_right = x;
+	}
+
+	if (z != y)
+	{
+		z->m_data = y->m_data;
+		z->m_count = y->m_count;
+	}
+	return y;
 }
 
 void TestBTree()
 {
-	BTreeNodePtr pRoot=0, pNode=0;
+	BTreeNodePtr pRoot=0, pNode=0, temp;
 	DataType key;
 	FILE *fp = fopen("bintree_input", "r");
 	if (!fp)
 	{
-		printf("Cannot open input file!");
+		printf("Cannot open input file!\n");
 		return;
 	}
 	fscanf(fp, "%ld", &key);
@@ -370,6 +396,23 @@ void TestBTree()
 	//TreeStackPostOrderVisit(pRoot, PrintNode);
 	//printf("Level Order:\n");
 	//TreeQueueLevelOrderVisit(pRoot, PrintNode);
+	TreeIterativeInOrderVisit(pRoot, PrintNode);
+	printf("Input the key you need to delete:\n");
+	scanf("%ld", &key);
+	while (key != -1)
+	{
+		pNode = IterativeTreeSearch(pRoot, key);
+		if (pNode)
+		{
+			temp = IterativeTreeDelete(&pRoot, pNode);
+			free(temp);
+		}
+		else
+			printf("Cannot find node with key = %d\n", key);
+		printf("Input the key you need to delete:\n");
+		scanf("%ld", &key);
+	}
+	printf("After delete, InOrder:\n");
 	TreeIterativeInOrderVisit(pRoot, PrintNode);
 	DestructTree(pRoot);
 	return;

@@ -33,7 +33,7 @@ void TreeIterativeInOrderVisit(BTreeNodePtr ptr, visit pVisit);
 
 //in these two function node count will no longer be used
 void IterativeTreeInsert(BTreeNodePtr *pRoot, BTreeNodePtr ptr);
-void IterativeTreeDelete(BTreeNodePtr *pRoot, BTreeNodePtr ptr);
+BTreeNodePtr IterativeTreeDelete(BTreeNodePtr *pRoot, BTreeNodePtr ptr);
 
 void TestBTree();
 
