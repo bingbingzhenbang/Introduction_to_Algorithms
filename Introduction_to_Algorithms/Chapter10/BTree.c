@@ -363,6 +363,51 @@ BTreeNodePtr IterativeTreeDelete(BTreeNodePtr *pRoot, BTreeNodePtr z)
 	return y;
 }
 
+BTreeNodePtr IterativeTreeSafeDelete(BTreeNodePtr *pRoot, BTreeNodePtr z)
+{
+	BTreeNodePtr y, x;
+	if (z->m_left == NULL || z->m_right == NULL)
+		y = z;
+	else
+		y = TreeSuccessor(z);
+
+	if (y->m_left != NULL)
+		x = y->m_left;
+	else
+		x = y->m_right;
+
+	if (x != NULL)
+		x->m_parent = y->m_parent;
+
+	if (y->m_parent == NULL)
+		*pRoot = x;
+	else
+	{
+		if (y == y->m_parent->m_left)
+			y->m_parent->m_left = x;
+		else
+			y->m_parent->m_right = x;
+	}
+
+	if (z != y)
+	{
+		y->m_parent = z->m_parent;
+		y->m_left = z->m_left;
+		y->m_right = z->m_right;
+		if (z == z->m_parent->m_left)
+			z->m_parent->m_left = y;
+		else
+			z->m_parent->m_right = y;
+		if (y->m_left != NULL)
+			y->m_left->m_parent = y;
+		if (y->m_right != NULL)
+			y->m_right->m_parent = y;
+
+	}
+	return z;
+
+}
+
 BTreeNodePtr TreeInsert(BTreeNodePtr pRoot, BTreeNodePtr ptr)
 {
 	if (pRoot == NULL)
@@ -382,7 +427,7 @@ BTreeNodePtr TreeInsert(BTreeNodePtr pRoot, BTreeNodePtr ptr)
 
 void TestBTree()
 {
-	BTreeNodePtr pRoot=0, pNode=0, temp;
+	BTreeNodePtr pRoot=0, pNode=0, temp, temp1;
 	DataType key;
 	FILE *fp = fopen("bintree_input", "r");
 	if (!fp)
@@ -415,21 +460,23 @@ void TestBTree()
 	//printf("Level Order:\n");
 	//TreeQueueLevelOrderVisit(pRoot, PrintNode);
 	TreeIterativeInOrderVisit(pRoot, PrintNode);
-	printf("Input the key you need to delete:\n");
+	printf("Input the key you need to search:\n");
 	scanf("%ld", &key);
-	while (key != -1)
+
+	pNode = IterativeTreeSearch(pRoot, key);
+	if (pNode)
 	{
-		pNode = IterativeTreeSearch(pRoot, key);
-		if (pNode)
+		temp = TreePredecessor(pNode);
+		if (temp)
 		{
-			temp = IterativeTreeDelete(&pRoot, pNode);
-			free(temp);
+			temp1 = IterativeTreeSafeDelete(&pRoot, temp);
+			free(temp1);
 		}
-		else
-			printf("Cannot find node with key = %d\n", key);
-		printf("Input the key you need to delete:\n");
-		scanf("%ld", &key);
 	}
+	else
+		printf("Cannot find node with key = %d\n", key);
+	printf("Input the key you need to search:\n");
+
 	printf("After delete, InOrder:\n");
 	TreeIterativeInOrderVisit(pRoot, PrintNode);
 	DestructTree(pRoot);
