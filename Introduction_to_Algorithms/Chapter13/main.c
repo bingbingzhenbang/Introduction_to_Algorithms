@@ -1,4 +1,5 @@
 #include "RBTree.h"
+#include "AVLTree.h"
 
 int main()
 {
