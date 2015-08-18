@@ -24,6 +24,25 @@ typedef struct RBTreeNode
 typedef RBTreeNode *RBTreeNodePtr;
 typedef void (*rbvisit)(RBTreeNodePtr ptr);
 
+typedef struct RBTree
+{
+	RBTreeNodePtr m_root;
+	RBTreeNodePtr m_null;
+}RBTree;
+
+typedef RBTree *RBTreePtr;
+
+void InitializeRBTree(RBTreePtr pTree);
+void DestructRBTree(RBTreePtr pTree);
+
+RBTreeNodePtr IterativeTreeMinimum(RBTreePtr pTree, RBTreeNodePtr ptr);
+RBTreeNodePtr IterativeTreeMaximum(RBTreePtr pTree, RBTreeNodePtr ptr);
+
+RBTreeNodePtr TreeSuccessor(RBTreePtr pTree, RBTreeNodePtr ptr);
+RBTreeNodePtr TreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr);
+
+void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x);
+void RightRotate(RBTreePtr pTree, RBTreeNodePtr y);
 
 void TestRBTree();
 
