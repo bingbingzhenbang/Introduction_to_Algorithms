@@ -26,8 +26,8 @@ typedef void (*rbvisit)(RBTreeNodePtr ptr);
 
 typedef struct RBTree
 {
-	RBTreeNodePtr m_root;
 	RBTreeNodePtr m_null;
+	RBTreeNodePtr m_root;
 }RBTree;
 
 typedef RBTree *RBTreePtr;
@@ -43,6 +43,9 @@ RBTreeNodePtr TreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr);
 
 void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x);
 void RightRotate(RBTreePtr pTree, RBTreeNodePtr y);
+
+void RBTreeInsert(RBTreePtr pTree, RBTreeNodePtr z);
+void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z);
 
 void TestRBTree();
 

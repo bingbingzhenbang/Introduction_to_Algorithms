@@ -11,15 +11,16 @@ void PrintRBTreeNode(RBTreeNodePtr ptr)
 
 void InitializeRBTree(RBTreePtr pTree)
 {
-	pTree->m_root = NULL;
 	pTree->m_null = (RBTreeNodePtr)(malloc(sizeof(RBTreeNode)));
 	pTree->m_null->m_color = Enum_Black;
 	pTree->m_null->m_key = pTree->m_null->m_value = 0;
 	pTree->m_null->m_parent = pTree->m_null->m_left = pTree->m_null->m_right = NULL;
+	pTree->m_root = pTree->m_null;
 }
 
 void DestructRBTree(RBTreePtr pTree)
 {
+	//to do
 	free(pTree->m_null);
 }
 
@@ -109,6 +110,41 @@ void RightRotate(RBTreePtr pTree, RBTreeNodePtr y)
 	}
 	x->m_right = y;
 	y->m_parent = x;
+}
+
+void RBTreeInsert(RBTreePtr pTree, RBTreeNodePtr z)
+{
+	RBTreeNodePtr y = pTree->m_null, x = pTree->m_root;
+	while (x != pTree->m_null)
+	{
+		y = x;
+		if (z->m_key < x->m_key)
+			x = x->m_left;
+		else
+			x = x->m_right;
+	}
+	z->m_parent = y;
+
+	if (y == pTree->m_null)
+	{
+		pTree->m_root = z;
+	}
+	else
+	{
+		if (z->m_key < y->m_key)
+			y->m_left = z;
+		else
+			y->m_right = z;
+	}
+	z->m_left = pTree->m_null;
+	z->m_right = pTree->m_null;
+	z->m_color = Enum_Red;
+	RBTreeInsertFixup(pTree, z);
+}
+
+void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z)
+{
+
 }
 
 void TestRBTree()
