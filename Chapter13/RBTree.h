@@ -24,6 +24,8 @@ typedef struct RBTreeNode
 typedef RBTreeNode *RBTreeNodePtr;
 typedef void (*rbvisit)(RBTreeNodePtr ptr);
 
+RBTreeNodePtr MakeRBTreeNode(KeyType key);
+
 typedef struct RBTree
 {
 	RBTreeNodePtr m_null;
@@ -34,6 +36,7 @@ typedef RBTree *RBTreePtr;
 
 void InitializeRBTree(RBTreePtr pTree);
 void DestructRBTree(RBTreePtr pTree);
+void DestructRBSubTree(RBTreePtr pTree, RBTreeNodePtr ptr);
 
 RBTreeNodePtr IterativeTreeMinimum(RBTreePtr pTree, RBTreeNodePtr ptr);
 RBTreeNodePtr IterativeTreeMaximum(RBTreePtr pTree, RBTreeNodePtr ptr);
@@ -41,11 +44,16 @@ RBTreeNodePtr IterativeTreeMaximum(RBTreePtr pTree, RBTreeNodePtr ptr);
 RBTreeNodePtr TreeSuccessor(RBTreePtr pTree, RBTreeNodePtr ptr);
 RBTreeNodePtr TreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr);
 
+void RBTreeInOrderVisit(RBTreePtr pTree, RBTreeNodePtr ptr, rbvisit pVisit);
+
 void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x);
 void RightRotate(RBTreePtr pTree, RBTreeNodePtr y);
 
 void RBTreeInsert(RBTreePtr pTree, RBTreeNodePtr z);
 void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z);
+
+void RBTreeDelete(RBTreePtr pTree, RBTreeNodePtr z);
+void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr z);
 
 void TestRBTree();
 
