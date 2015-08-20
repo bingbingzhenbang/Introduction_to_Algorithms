@@ -6,7 +6,18 @@ const char *NodeColorNames[] = {"Red", "Black"};
 
 void PrintRBTreeNode(RBTreeNodePtr ptr)
 {
-	printf("color = %5s key = %3d count = %3d\n", NodeColorNames[ptr->m_color], ptr->m_key, ptr->m_value);
+	printf("color = %4s key = %3d value = %3d\n", NodeColorNames[ptr->m_color], ptr->m_key, ptr->m_value);
+}
+
+RBTreeNodePtr MakeRBTreeNode(KeyType key)
+{
+	RBTreeNodePtr ptr;
+	ptr = (RBTreeNodePtr)(malloc(sizeof(RBTreeNode)));
+	ptr->m_key = key;
+	ptr->m_value = 0;
+	ptr->m_color = Enum_Red;
+	ptr->m_parent = ptr->m_left = ptr->m_right = NULL;
+	return ptr;
 }
 
 void InitializeRBTree(RBTreePtr pTree)
@@ -20,8 +31,19 @@ void InitializeRBTree(RBTreePtr pTree)
 
 void DestructRBTree(RBTreePtr pTree)
 {
-	//to do
+	DestructRBSubTree(pTree, pTree->m_root);
 	free(pTree->m_null);
+	pTree->m_null = pTree->m_root = NULL;
+}
+
+void DestructRBSubTree(RBTreePtr pTree, RBTreeNodePtr ptr)
+{
+	if (ptr != pTree->m_null)
+	{
+		DestructRBSubTree(pTree, ptr->m_left);
+		DestructRBSubTree(pTree, ptr->m_right);
+		free(ptr);
+	}
 }
 
 RBTreeNodePtr IterativeTreeMinimum(RBTreePtr pTree, RBTreeNodePtr ptr)
@@ -66,6 +88,16 @@ RBTreeNodePtr TreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr)
 		y = y->m_parent;
 	}
 	return y;
+}
+
+void RBTreeInOrderVisit(RBTreePtr pTree, RBTreeNodePtr ptr, rbvisit pVisit)
+{
+	if (ptr != pTree->m_null)
+	{
+		RBTreeInOrderVisit(pTree, ptr->m_left, pVisit);
+		pVisit(ptr);
+		RBTreeInOrderVisit(pTree, ptr->m_right, pVisit);
+	}
 }
 
 void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x)
@@ -144,12 +176,63 @@ void RBTreeInsert(RBTreePtr pTree, RBTreeNodePtr z)
 
 void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z)
 {
+	RBTreeNodePtr y;
+	while (z->m_parent->m_color == Enum_Red)
+	{
+		if (z->m_parent == z->m_parent->m_parent->m_left)
+		{
+			y = z->m_parent->m_parent->m_right;
+			if (y->m_color == Enum_Red)
+			{
+				z->m_parent->m_color = Enum_Black;
+				y->m_color = Enum_Black;
+				z->m_parent->m_parent->m_color = Enum_Red;
+				z = z->m_parent->m_parent;
+			}
+			else if (z == z->m_parent->m_right)
+			{
+				z = z->m_parent;
+				LeftRotate(pTree, z);
+			}
+			z->m_parent->m_color = Enum_Black;
+			z->m_parent->m_parent->m_color = Enum_Red;
+			RightRotate(pTree, z->m_parent->m_parent);
+		}
+		else
+		{
+
+		}
+	}
+	pTree->m_root->m_color = Enum_Black;
+}
+
+void RBTreeDelete(RBTreePtr pTree, RBTreeNodePtr z)
+{
+	RBTreeDeleteFixup(pTree, z);
+}
+
+void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr z)
+{
 
 }
 
 void TestRBTree()
 {
-	RBTree tree;
+	RBTree tree; RBTreeNodePtr pNode; KeyType key;
+	FILE *fp = fopen("rbtree_input", "r");
+	if (!fp)
+	{
+		printf("Cannot open input file!\n");
+		return;
+	}
+	fscanf(fp, "%ld", &key);
 	InitializeRBTree(&tree);
+	while (key != -1)
+	{
+		pNode = MakeRBTreeNode(key);
+		RBTreeInsert(&tree, pNode);
+		fscanf(fp, "%ld", &key);
+	}
+	RBTreeInOrderVisit(&tree, tree.m_root, PrintRBTreeNode);
 	DestructRBTree(&tree);
 }
