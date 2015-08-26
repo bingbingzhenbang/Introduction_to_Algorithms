@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const char *NodeColorNames[] = {"Red", "Black"};
+const char *NodeColorNames[Enum_ColorCount] = {"Red", "Black"};
 
 void PrintRBTreeNode(RBTreeNodePtr ptr)
 {
@@ -46,25 +46,25 @@ void DestructRBSubTree(RBTreePtr pTree, RBTreeNodePtr ptr)
 	}
 }
 
-RBTreeNodePtr IterativeTreeMinimum(RBTreePtr pTree, RBTreeNodePtr ptr)
+RBTreeNodePtr IterativeRBTreeMinimum(RBTreePtr pTree, RBTreeNodePtr ptr)
 {
 	while (ptr->m_left != pTree->m_null)
 		ptr = ptr->m_left;
 	return ptr;
 }
 
-RBTreeNodePtr IterativeTreeMaximum(RBTreePtr pTree, RBTreeNodePtr ptr)
+RBTreeNodePtr IterativeRBTreeMaximum(RBTreePtr pTree, RBTreeNodePtr ptr)
 {
 	while (ptr->m_right != pTree->m_null)
 		ptr = ptr->m_right;
 	return ptr;
 }
 
-RBTreeNodePtr TreeSuccessor(RBTreePtr pTree, RBTreeNodePtr ptr)
+RBTreeNodePtr RBTreeSuccessor(RBTreePtr pTree, RBTreeNodePtr ptr)
 {
 	RBTreeNodePtr y;
 	if (ptr->m_right != pTree->m_null)
-		return IterativeTreeMinimum(pTree, ptr->m_right);
+		return IterativeRBTreeMinimum(pTree, ptr->m_right);
 
 	y = ptr->m_parent;
 	while (y != pTree->m_null && ptr == y->m_right)
@@ -75,11 +75,11 @@ RBTreeNodePtr TreeSuccessor(RBTreePtr pTree, RBTreeNodePtr ptr)
 	return y;
 }
 
-RBTreeNodePtr TreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr)
+RBTreeNodePtr RBTreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr)
 {
 	RBTreeNodePtr y;
 	if (ptr->m_left != pTree->m_null)
-		return IterativeTreeMaximum(pTree, ptr->m_left);
+		return IterativeRBTreeMaximum(pTree, ptr->m_left);
 
 	y = ptr->m_parent;
 	while (y != pTree->m_null && ptr == y->m_left)
@@ -98,6 +98,18 @@ void RBTreeInOrderVisit(RBTreePtr pTree, RBTreeNodePtr ptr, rbvisit pVisit)
 		pVisit(ptr);
 		RBTreeInOrderVisit(pTree, ptr->m_right, pVisit);
 	}
+}
+
+RBTreeNodePtr IterativeRBTreeSearch(RBTreePtr pTree, RBTreeNodePtr ptr, KeyType key)
+{
+	while (ptr != pTree->m_null && ptr->m_key != key)
+	{
+		if (key < ptr->m_key)
+			ptr = ptr->m_left;
+		else
+			ptr = ptr->m_right;
+	}
+	return ptr;
 }
 
 void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x)
@@ -189,31 +201,118 @@ void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z)
 				z->m_parent->m_parent->m_color = Enum_Red;
 				z = z->m_parent->m_parent;
 			}
-			else if (z == z->m_parent->m_right)
+			else
 			{
-				z = z->m_parent;
-				LeftRotate(pTree, z);
+				if (z == z->m_parent->m_right)
+				{
+					z = z->m_parent;
+					LeftRotate(pTree, z);
+				}
+				z->m_parent->m_color = Enum_Black;
+				z->m_parent->m_parent->m_color = Enum_Red;
+				RightRotate(pTree, z->m_parent->m_parent);
 			}
-			z->m_parent->m_color = Enum_Black;
-			z->m_parent->m_parent->m_color = Enum_Red;
-			RightRotate(pTree, z->m_parent->m_parent);
+		}
+		else
+		{
+			y = z->m_parent->m_parent->m_left;
+			if (y->m_color == Enum_Red)
+			{
+				z->m_parent->m_color = Enum_Black;
+				y->m_color = Enum_Black;
+				z->m_parent->m_parent->m_color = Enum_Red;
+				z = z->m_parent->m_parent;
+			}
+			else
+			{
+				if (z == z->m_parent->m_left)
+				{
+					z = z->m_parent;
+					RightRotate(pTree, z);
+				}
+				z->m_parent->m_color = Enum_Black;
+				z->m_parent->m_parent->m_color = Enum_Red;
+				LeftRotate(pTree, z->m_parent->m_parent);
+			}
+		}
+	}
+	pTree->m_root->m_color = Enum_Black;
+}
+
+RBTreeNodePtr RBTreeDelete(RBTreePtr pTree, RBTreeNodePtr z)
+{
+	RBTreeNodePtr y = pTree->m_null, x = pTree->m_null;
+	if (z->m_left == pTree->m_null || z->m_right == pTree->m_null)
+		y = z;
+	else
+		y = RBTreeSuccessor(pTree, z);
+
+	if (y->m_left != pTree->m_null)
+		x = y->m_left;
+	else
+		x = y->m_right;
+
+	x->m_parent = y->m_parent;
+
+	if (y->m_parent == pTree->m_null)
+		pTree->m_root = x;
+	else
+	{
+		if (y == y->m_parent->m_left)
+			y->m_parent->m_left = x;
+		else
+			y->m_parent->m_right = x;
+	}
+
+	if (y != z)
+	{
+		z->m_key = y->m_key;
+		z->m_value = y->m_value;
+	}
+	if (y->m_color == Enum_Black)
+		RBTreeDeleteFixup(pTree, x);
+	return y;
+}
+
+void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr x)
+{
+	RBTreeNodePtr w;
+	while (x != pTree->m_root && x->m_color == Enum_Black)
+	{
+		if (x == x->m_parent->m_left)
+		{
+			w = x->m_parent->m_right;
+			if (w->m_color == Enum_Red)
+			{
+				w->m_color = Enum_Black;
+				x->m_parent->m_color = Enum_Red;
+				LeftRotate(pTree, x->m_parent);
+				w = x->m_parent->m_right;
+			}
+			if (w->m_left->m_color == Enum_Black && w->m_right->m_color == Enum_Black)
+			{
+				w->m_color = Enum_Red;
+				x = x->m_parent;
+			}
+			else if (w->m_right->m_color == Enum_Black)
+			{
+				w->m_left->m_color = Enum_Black;
+				w->m_color = Enum_Red;
+				RightRotate(pTree, w);
+				w = x->m_parent->m_right;
+			}
+			w->m_color = x->m_parent->m_color;
+			x->m_parent->m_color = Enum_Black;
+			w->m_right->m_color = Enum_Black;
+			LeftRotate(pTree, x->m_parent);
+			x = pTree->m_root;
 		}
 		else
 		{
 
 		}
 	}
-	pTree->m_root->m_color = Enum_Black;
-}
-
-void RBTreeDelete(RBTreePtr pTree, RBTreeNodePtr z)
-{
-	RBTreeDeleteFixup(pTree, z);
-}
-
-void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr z)
-{
-
+	x->m_color = Enum_Black;
 }
 
 void TestRBTree()
@@ -233,6 +332,7 @@ void TestRBTree()
 		RBTreeInsert(&tree, pNode);
 		fscanf(fp, "%ld", &key);
 	}
+	fclose(fp);
 	RBTreeInOrderVisit(&tree, tree.m_root, PrintRBTreeNode);
 	DestructRBTree(&tree);
 }
