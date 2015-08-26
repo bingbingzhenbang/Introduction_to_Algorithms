@@ -443,6 +443,7 @@ void TestBTree()
 		pRoot = TreeInsert(pRoot, pNode);
 		fscanf(fp, "%ld", &key);
 	}
+	fclose(fp);
 	printf("InOrder:\n");
 	//TreeInOrderVisit(pRoot, PrintNode);
 	//printf("Stack InOrder:\n");

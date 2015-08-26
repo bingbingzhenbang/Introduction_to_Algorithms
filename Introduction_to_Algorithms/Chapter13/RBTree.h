@@ -38,13 +38,14 @@ void InitializeRBTree(RBTreePtr pTree);
 void DestructRBTree(RBTreePtr pTree);
 void DestructRBSubTree(RBTreePtr pTree, RBTreeNodePtr ptr);
 
-RBTreeNodePtr IterativeTreeMinimum(RBTreePtr pTree, RBTreeNodePtr ptr);
-RBTreeNodePtr IterativeTreeMaximum(RBTreePtr pTree, RBTreeNodePtr ptr);
+RBTreeNodePtr IterativeRBTreeMinimum(RBTreePtr pTree, RBTreeNodePtr ptr);
+RBTreeNodePtr IterativeRBTreeMaximum(RBTreePtr pTree, RBTreeNodePtr ptr);
 
-RBTreeNodePtr TreeSuccessor(RBTreePtr pTree, RBTreeNodePtr ptr);
-RBTreeNodePtr TreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr);
+RBTreeNodePtr RBTreeSuccessor(RBTreePtr pTree, RBTreeNodePtr ptr);
+RBTreeNodePtr RBTreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr);
 
 void RBTreeInOrderVisit(RBTreePtr pTree, RBTreeNodePtr ptr, rbvisit pVisit);
+RBTreeNodePtr IterativeRBTreeSearch(RBTreePtr pTree, RBTreeNodePtr ptr, KeyType key);
 
 void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x);
 void RightRotate(RBTreePtr pTree, RBTreeNodePtr y);
@@ -52,8 +53,8 @@ void RightRotate(RBTreePtr pTree, RBTreeNodePtr y);
 void RBTreeInsert(RBTreePtr pTree, RBTreeNodePtr z);
 void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z);
 
-void RBTreeDelete(RBTreePtr pTree, RBTreeNodePtr z);
-void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr z);
+RBTreeNodePtr RBTreeDelete(RBTreePtr pTree, RBTreeNodePtr z);
+void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr x);
 
 void TestRBTree();
 
