@@ -6,7 +6,7 @@ const char *NodeColorNames[Enum_ColorCount] = {"Red", "Black"};
 
 void PrintRBTreeNode(RBTreeNodePtr ptr)
 {
-	printf("color = %4s key = %3d value = %3d\n", NodeColorNames[ptr->m_color], ptr->m_key, ptr->m_value);
+	printf("color = %5s key = %3d value = %3d\n", NodeColorNames[ptr->m_color], ptr->m_key, ptr->m_value);
 }
 
 RBTreeNodePtr MakeRBTreeNode(KeyType key)
@@ -294,18 +294,21 @@ void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr x)
 				w->m_color = Enum_Red;
 				x = x->m_parent;
 			}
-			else if (w->m_right->m_color == Enum_Black)
+			else 
 			{
-				w->m_left->m_color = Enum_Black;
-				w->m_color = Enum_Red;
-				RightRotate(pTree, w);
-				w = x->m_parent->m_right;
+				if (w->m_right->m_color == Enum_Black)
+				{
+					w->m_left->m_color = Enum_Black;
+					w->m_color = Enum_Red;
+					RightRotate(pTree, w);
+					w = x->m_parent->m_right;
+				}
+				w->m_color = x->m_parent->m_color;
+				x->m_parent->m_color = Enum_Black;
+				w->m_right->m_color = Enum_Black;
+				LeftRotate(pTree, x->m_parent);
+				x = pTree->m_root;
 			}
-			w->m_color = x->m_parent->m_color;
-			x->m_parent->m_color = Enum_Black;
-			w->m_right->m_color = Enum_Black;
-			LeftRotate(pTree, x->m_parent);
-			x = pTree->m_root;
 		}
 		else
 		{
