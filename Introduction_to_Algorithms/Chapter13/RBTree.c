@@ -112,7 +112,7 @@ RBTreeNodePtr IterativeRBTreeSearch(RBTreePtr pTree, RBTreeNodePtr ptr, KeyType 
 	return ptr;
 }
 
-void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x)
+void RBLeftRotate(RBTreePtr pTree, RBTreeNodePtr x)
 {
 	RBTreeNodePtr y = x->m_right;
 	x->m_right = y->m_left;
@@ -134,7 +134,7 @@ void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x)
 	x->m_parent = y;
 }
 
-void RightRotate(RBTreePtr pTree, RBTreeNodePtr y)
+void RBRightRotate(RBTreePtr pTree, RBTreeNodePtr y)
 {
 	RBTreeNodePtr x = y->m_left;
 	y->m_left = x->m_right;
@@ -206,11 +206,11 @@ void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z)
 				if (z == z->m_parent->m_right)
 				{
 					z = z->m_parent;
-					LeftRotate(pTree, z);
+					RBLeftRotate(pTree, z);
 				}
 				z->m_parent->m_color = Enum_Black;
 				z->m_parent->m_parent->m_color = Enum_Red;
-				RightRotate(pTree, z->m_parent->m_parent);
+				RBRightRotate(pTree, z->m_parent->m_parent);
 			}
 		}
 		else
@@ -228,11 +228,11 @@ void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z)
 				if (z == z->m_parent->m_left)
 				{
 					z = z->m_parent;
-					RightRotate(pTree, z);
+					RBRightRotate(pTree, z);
 				}
 				z->m_parent->m_color = Enum_Black;
 				z->m_parent->m_parent->m_color = Enum_Red;
-				LeftRotate(pTree, z->m_parent->m_parent);
+				RBLeftRotate(pTree, z->m_parent->m_parent);
 			}
 		}
 	}
@@ -284,9 +284,9 @@ void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr x)
 			w = x->m_parent->m_right;
 			if (w->m_color == Enum_Red)
 			{
-				w->m_color = Enum_Black;
 				x->m_parent->m_color = Enum_Red;
-				LeftRotate(pTree, x->m_parent);
+				w->m_color = Enum_Black;
+				RBLeftRotate(pTree, x->m_parent);
 				w = x->m_parent->m_right;
 			}
 			if (w->m_left->m_color == Enum_Black && w->m_right->m_color == Enum_Black)
@@ -294,25 +294,52 @@ void RBTreeDeleteFixup(RBTreePtr pTree, RBTreeNodePtr x)
 				w->m_color = Enum_Red;
 				x = x->m_parent;
 			}
-			else 
+			else
 			{
-				if (w->m_right->m_color == Enum_Black)
+				if(w->m_right->m_color == Enum_Black)
 				{
-					w->m_left->m_color = Enum_Black;
 					w->m_color = Enum_Red;
-					RightRotate(pTree, w);
+					w->m_left->m_color = Enum_Black;
+					RBRightRotate(pTree, w);
 					w = x->m_parent->m_right;
 				}
 				w->m_color = x->m_parent->m_color;
 				x->m_parent->m_color = Enum_Black;
 				w->m_right->m_color = Enum_Black;
-				LeftRotate(pTree, x->m_parent);
+				RBLeftRotate(pTree, x->m_parent);
 				x = pTree->m_root;
 			}
 		}
 		else
-		{
-
+		{			
+			w = x->m_parent->m_left;
+			if (w->m_color == Enum_Red)
+			{
+				x->m_parent->m_color = Enum_Red;
+				w->m_color = Enum_Black;
+				RBRightRotate(pTree, x->m_parent);
+				w = x->m_parent->m_left;
+			}
+			if (w->m_right->m_color == Enum_Black && w->m_left->m_color == Enum_Black)
+			{
+				w->m_color = Enum_Red;
+				x = x->m_parent;
+			}
+			else
+			{
+				if(w->m_left->m_color == Enum_Black)
+				{
+					w->m_color = Enum_Red;
+					w->m_right->m_color = Enum_Black;
+					RBLeftRotate(pTree, w);
+					w = x->m_parent->m_left;
+				}
+				w->m_color = x->m_parent->m_color;
+				x->m_parent->m_color = Enum_Black;
+				w->m_left->m_color = Enum_Black;
+				RBRightRotate(pTree, x->m_parent);
+				x = pTree->m_root;
+			}
 		}
 	}
 	x->m_color = Enum_Black;
@@ -337,5 +364,18 @@ void TestRBTree()
 	}
 	fclose(fp);
 	RBTreeInOrderVisit(&tree, tree.m_root, PrintRBTreeNode);
+	printf("Input the key you want to delete:\n");
+	scanf("%ld", &key);
+	while (key != -1)
+	{
+		pNode = IterativeRBTreeSearch(&tree, tree.m_root, key);
+		if (pNode != tree.m_null)
+		{
+			RBTreeDelete(&tree, pNode);
+		}
+		if (tree.m_root == tree.m_null)
+			break;
+		scanf("%ld", &key);
+	}
 	DestructRBTree(&tree);
 }

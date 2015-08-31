@@ -3,6 +3,7 @@
 
 int main()
 {
-	TestRBTree();
+	//TestRBTree();
+	TestAVLTree();
 	return 0;
 }
