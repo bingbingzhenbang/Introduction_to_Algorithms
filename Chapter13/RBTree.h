@@ -47,8 +47,8 @@ RBTreeNodePtr RBTreePredecessor(RBTreePtr pTree, RBTreeNodePtr ptr);
 void RBTreeInOrderVisit(RBTreePtr pTree, RBTreeNodePtr ptr, rbvisit pVisit);
 RBTreeNodePtr IterativeRBTreeSearch(RBTreePtr pTree, RBTreeNodePtr ptr, KeyType key);
 
-void LeftRotate(RBTreePtr pTree, RBTreeNodePtr x);
-void RightRotate(RBTreePtr pTree, RBTreeNodePtr y);
+void RBLeftRotate(RBTreePtr pTree, RBTreeNodePtr x);
+void RBRightRotate(RBTreePtr pTree, RBTreeNodePtr y);
 
 void RBTreeInsert(RBTreePtr pTree, RBTreeNodePtr z);
 void RBTreeInsertFixup(RBTreePtr pTree, RBTreeNodePtr z);
