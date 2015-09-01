@@ -371,7 +371,8 @@ void TestRBTree()
 		pNode = IterativeRBTreeSearch(&tree, tree.m_root, key);
 		if (pNode != tree.m_null)
 		{
-			RBTreeDelete(&tree, pNode);
+			pNode = RBTreeDelete(&tree, pNode);
+			free(pNode);
 		}
 		if (tree.m_root == tree.m_null)
 			break;
