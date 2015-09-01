@@ -43,7 +43,7 @@ AVLTreeNodePtr IterativeAVLTreeSearch(AVLTreeNodePtr ptr, KeyType key);
 void AVLLeftRotate(AVLTreePtr pTree, AVLTreeNodePtr x);
 void AVLRightRotate(AVLTreePtr pTree, AVLTreeNodePtr y);
 
-void AVLBalance(AVLTreePtr pTree, AVLTreeNodePtr x);
+int AVLBalance(AVLTreePtr pTree, AVLTreeNodePtr x);
 
 AVLTreeNodePtr AVLTreeInsert(AVLTreePtr pTree, AVLTreeNodePtr x, AVLTreeNodePtr z);
 

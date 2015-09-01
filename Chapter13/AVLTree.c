@@ -7,7 +7,7 @@
 
 void PrintAVLTreeNode(AVLTreeNodePtr ptr)
 {
-	printf("height = %3d key = %3d value = %3d height = %3d\n", ptr->m_height, ptr->m_key, ptr->m_value);
+	printf("key = %3d value = %3d height = %3d\n", ptr->m_key, ptr->m_value, AVLTreeNodeHeight(ptr));
 }
 
 AVLTreeNodePtr MakeAVLTreeNode(KeyType key)
@@ -127,6 +127,8 @@ void AVLLeftRotate(AVLTreePtr pTree, AVLTreeNodePtr x)
 	}
 	y->m_left = x;
 	x->m_parent = y;
+	x->m_height = max( AVLTreeNodeHeight(x->m_left), AVLTreeNodeHeight(x->m_right) ) + 1;
+	y->m_height = max( AVLTreeNodeHeight(y->m_left), AVLTreeNodeHeight(y->m_right) ) + 1;
 }
 
 void AVLRightRotate(AVLTreePtr pTree, AVLTreeNodePtr y)
@@ -149,31 +151,61 @@ void AVLRightRotate(AVLTreePtr pTree, AVLTreeNodePtr y)
 	}
 	x->m_right = y;
 	y->m_parent = x;
+	y->m_height = max( AVLTreeNodeHeight(y->m_left), AVLTreeNodeHeight(y->m_right) ) + 1;
+	x->m_height = max( AVLTreeNodeHeight(x->m_left), AVLTreeNodeHeight(x->m_right) ) + 1;
 }
 
-void AVLBalance(AVLTreePtr pTree, AVLTreeNodePtr x)
+int AVLBalance(AVLTreePtr pTree, AVLTreeNodePtr x)
 {
 	int Lh = AVLTreeNodeHeight(x->m_left), Rh = AVLTreeNodeHeight(x->m_right);
-	int Lsubh, Rsubh;
+	int Lsubh, Rsubh, rt;
 	if (abs(Lh - Rh) <= 1)
-		return;
+		rt = 0;
 	else if (Lh - Rh == 2)
 	{
-
+		Lsubh = AVLTreeNodeHeight(x->m_left->m_left);
+		Rsubh = AVLTreeNodeHeight(x->m_left->m_right);
+		if (Lsubh - Rh == 1)
+		{
+			AVLRightRotate(pTree, x);
+			rt = 1;
+		}
+		else if (Rsubh - Rh == 1)
+		{
+			AVLLeftRotate(pTree, x->m_left);
+			AVLRightRotate(pTree, x);
+			rt = 1;
+		}
+		else
+			rt = -1;
 	}
 	else if (Rh - Lh == 2)
 	{
-
+		Rsubh = AVLTreeNodeHeight(x->m_right->m_right);
+		Lsubh = AVLTreeNodeHeight(x->m_right->m_left);
+		if (Rsubh - Lh == 1)
+		{
+			AVLLeftRotate(pTree, x);
+			rt = 1;
+		}
+		else if (Lsubh - Lh == 1)
+		{
+			AVLRightRotate(pTree, x->m_right);
+			AVLLeftRotate(pTree, x);
+			rt = 1;
+		}
+		else
+			rt = -1;
 	}
 	else
-	{
-		printf("Invalid AVL tree!\n");
-	}
+		rt = -1;
+	return rt;
 }
 
 AVLTreeNodePtr AVLTreeInsert(AVLTreePtr pTree, AVLTreeNodePtr x, AVLTreeNodePtr z)
 {
 	AVLTreeNodePtr y = NULL;
+	int rt;
 	if (x == NULL)
 	{
 		z->m_parent = NULL;
@@ -193,18 +225,24 @@ AVLTreeNodePtr AVLTreeInsert(AVLTreePtr pTree, AVLTreeNodePtr x, AVLTreeNodePtr 
 		x->m_right = AVLTreeInsert(pTree, x->m_right, z);
 		x->m_right->m_parent = x;
 	}
-	AVLBalance(pTree, x);
+	rt = AVLBalance(pTree, x);
+	if (rt == 1)
+		x = x->m_parent;
+	else if (rt == -1)
+		printf("AVL Rotate Error!");
 	x->m_height = max( AVLTreeNodeHeight(x->m_left), AVLTreeNodeHeight(x->m_right) ) + 1;
 	return x;
 }
 
 AVLTreeNodePtr AVLTreeDelete(AVLTreePtr pTree, AVLTreeNodePtr z)
 {
-	AVLTreeNodePtr y = NULL, x = NULL;
+	AVLTreeNodePtr y = NULL, x = NULL, parent;
+	int rt;
 	if (z->m_left == NULL || z->m_right == NULL)
 		y = z;
 	else
 		y = AVLTreeSuccessor(z);
+	parent = y;
 
 	if (y->m_left != NULL)
 		x = y->m_left;
@@ -222,12 +260,24 @@ AVLTreeNodePtr AVLTreeDelete(AVLTreePtr pTree, AVLTreeNodePtr z)
 			y->m_parent->m_left = x;
 		else
 			y->m_parent->m_right = x;
+		y->m_parent->m_height = AVLTreeNodeHeight(x) + 1;
 	}
 
 	if (y != z)
 	{
 		z->m_key = y->m_key;
 		z->m_value = y->m_value;
+	}
+	parent = y->m_parent;
+	while (parent)
+	{
+		parent->m_height = max( AVLTreeNodeHeight(parent->m_left), AVLTreeNodeHeight(parent->m_right) ) + 1;
+		rt = AVLBalance(pTree, parent);
+		if (rt == 1)
+			parent = parent->m_parent;
+		else if (rt == -1)
+			printf("AVL Rotate Error!");
+		parent = parent->m_parent;
 	}
 	return y;
 }
@@ -258,7 +308,8 @@ void TestAVLTree()
 		pNode = IterativeAVLTreeSearch(tree.m_root, key);
 		if (pNode != NULL)
 		{
-			AVLTreeDelete(&tree, pNode);
+			pNode = AVLTreeDelete(&tree, pNode);
+			free(pNode);
 		}
 		if (tree.m_root == NULL)
 			break;
