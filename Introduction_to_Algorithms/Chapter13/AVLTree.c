@@ -260,7 +260,6 @@ AVLTreeNodePtr AVLTreeDelete(AVLTreePtr pTree, AVLTreeNodePtr z)
 			y->m_parent->m_left = x;
 		else
 			y->m_parent->m_right = x;
-		y->m_parent->m_height = AVLTreeNodeHeight(x) + 1;
 	}
 
 	if (y != z)
