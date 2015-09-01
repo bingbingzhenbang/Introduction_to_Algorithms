@@ -242,7 +242,6 @@ AVLTreeNodePtr AVLTreeDelete(AVLTreePtr pTree, AVLTreeNodePtr z)
 		y = z;
 	else
 		y = AVLTreeSuccessor(z);
-	parent = y;
 
 	if (y->m_left != NULL)
 		x = y->m_left;
