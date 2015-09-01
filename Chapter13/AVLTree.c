@@ -154,6 +154,7 @@ void AVLRightRotate(AVLTreePtr pTree, AVLTreeNodePtr y)
 void AVLBalance(AVLTreePtr pTree, AVLTreeNodePtr x)
 {
 	int Lh = AVLTreeNodeHeight(x->m_left), Rh = AVLTreeNodeHeight(x->m_right);
+	int Lsubh, Rsubh;
 	if (abs(Lh - Rh) <= 1)
 		return;
 	else if (Lh - Rh == 2)
