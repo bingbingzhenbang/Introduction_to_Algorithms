@@ -83,19 +83,22 @@ void LinkListDestruct(LinkListPtr pL)
 void LinkListReverse(LinkListPtr pL)
 {
 	LinkNodePtr p, q, t;
-	for (p=pL->m_head, q=p->m_next; p!=0 && q!=0;)
+	if (pL->m_head != NULL)
 	{
-		t = q->m_next;
-		q->m_next = p;
-		if (p==pL->m_head)
+		for (p=pL->m_head, q=p->m_next; p!=0 && q!=0;)
 		{
-			p->m_next = 0;
-			pL->m_tail = p;
+			t = q->m_next;
+			q->m_next = p;
+			if (p==pL->m_head)
+			{
+				p->m_next = 0;
+				pL->m_tail = p;
+			}
+			if (t==0)
+				pL->m_head = q;
+			p = q;
+			q = t;
 		}
-		if (t==0)
-			pL->m_head = q;
-		p = q;
-		q = t;
 	}
 }
 
