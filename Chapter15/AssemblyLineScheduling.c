@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void AssemblyLineScheduling(int *f_star, int *l_star, int size, int **f, int **l, int *e, int *x, int **a, int **t)
+void FastestWay(int *f_star, int *l_star, int size, int **f, int **l, int *e, int *x, int **a, int **t)
 {
 	int i = 0;
 	f[0][0] = e[0] + a[0][0];
@@ -41,7 +41,7 @@ void AssemblyLineScheduling(int *f_star, int *l_star, int size, int **f, int **l
 	}
 }
 
-void AssemblyLineSchedulingLessMemory(int *f_star, int *l_star, int size, int *f, int **l, int *e, int *x, int **a, int **t)
+void FastestWayLessMemory(int *f_star, int *l_star, int size, int *f, int **l, int *e, int *x, int **a, int **t)
 {
 	int i = 0, f_0, f_1;
 	f[0] = e[0] + a[0][0];
@@ -132,7 +132,7 @@ void testAssemblyLineScheduling()
 	fclose(fp);
 
 	printf("Assembly Line Scheduling\n");
-	AssemblyLineScheduling(&f_star, &l_star, size, f, l, e, x, a, t);
+	FastestWay(&f_star, &l_star, size, f, l, e, x, a, t);
 	printf("Minimum Path : %d\n", f_star);
 	printf("PrintStations :\n");
 	PrintStations(l_star, l, size - 1);
@@ -179,7 +179,7 @@ void testAssemblyLineSchedulingLessMemory()
 	fclose(fp);
 
 	printf("Assembly Line Scheduling Less Memory\n");
-	AssemblyLineSchedulingLessMemory(&f_star, &l_star, size, f, l, e, x, a, t);
+	FastestWayLessMemory(&f_star, &l_star, size, f, l, e, x, a, t);
 	printf("Minimum Path : %d\n", f_star);
 	printf("PrintStations :\n");
 	PrintStations(l_star, l, size - 1);
@@ -194,4 +194,3 @@ void testAssemblyLineSchedulingLessMemory()
 	free(l[0]);
 	free(l[1]);
 }
-

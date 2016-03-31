@@ -1,9 +1,11 @@
 void testAssemblyLineScheduling();
 void testAssemblyLineSchedulingLessMemory();
+void testMatrixChainMultiplication();
 
 int main()
 {
-	testAssemblyLineScheduling();
-	testAssemblyLineSchedulingLessMemory();
+	//testAssemblyLineScheduling();
+	//testAssemblyLineSchedulingLessMemory();
+	testMatrixChainMultiplication();
 	return 0;
 }

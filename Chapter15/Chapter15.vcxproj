@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyLineScheduling.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="MatrixChainMultiplication.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
