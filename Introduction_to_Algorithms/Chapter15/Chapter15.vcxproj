@@ -77,8 +77,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyLineScheduling.c" />
+    <ClCompile Include="LongestCommonSubsequence.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="MatrixChainMultiplication.c" />
+    <ClCompile Include="OptimalBinarySearchTrees.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
