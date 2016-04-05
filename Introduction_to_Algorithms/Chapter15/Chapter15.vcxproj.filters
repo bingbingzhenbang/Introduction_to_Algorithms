@@ -30,5 +30,8 @@
     <ClCompile Include="OptimalBinarySearchTrees.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LongestMonotonicallyIncreasingSubsequence.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

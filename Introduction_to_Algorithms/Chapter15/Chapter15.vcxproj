@@ -78,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyLineScheduling.c" />
     <ClCompile Include="LongestCommonSubsequence.c" />
+    <ClCompile Include="LongestMonotonicallyIncreasingSubsequence.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="MatrixChainMultiplication.c" />
     <ClCompile Include="OptimalBinarySearchTrees.c" />
