@@ -44,6 +44,50 @@ void LCSLength(int **c, int **b, int m, int n, char *X, char *Y)
 	}
 }
 
+int LookupLength(int **c, int **b, int i, int j, char *X, char *Y)
+{
+	int p = 0, q = 0;
+	if (c[i][j] < INT_MAX)
+		return c[i][j];
+	if (i == 0 || j == 0)
+		c[i][j] = 0;
+	else
+	{
+		if (X[i - 1] == Y[j - 1])
+		{
+			b[i - 1][j - 1] = Enum_TopLeft;
+			c[i][j] = LookupLength(c, b, i - 1, j - 1, X, Y) + 1;
+		}
+		else
+		{
+			p = LookupLength(c, b, i - 1, j, X, Y);
+			q = LookupLength(c, b, i, j - 1, X, Y);
+			if (p >= q)
+			{
+				b[i - 1][j - 1] = Enum_Top;
+				c[i][j] = p;
+			}
+			else
+			{
+				b[i - 1][j - 1] = Enum_Left;
+				c[i][j] = q;
+			}
+		}
+	}
+	return c[i][j];
+}
+
+int MemorizedLCSLength(int **c, int **b, int m, int n, char *X, char *Y)
+{
+	int i = 0, j = 0;
+	for (i = 0; i < m + 1; ++i)
+	{
+		for (j = 0; j < n + 1; ++j)
+			c[i][j] = INT_MAX;
+	}
+	return LookupLength(c, b, m, n, X, Y);
+}
+
 void PrintLCS(int **b, char *X, int i, int j)
 {
 	if (i == -1 || j == -1)
@@ -62,13 +106,12 @@ void PrintLCS(int **b, char *X, int i, int j)
 	}
 }
 
-
 void testLongestCommonSubsequence()
 {
-	char arr1[] = "ABCBDAB";
-	char arr2[] = "BDCABA";
-	//char arr1[] = "10010101";
-	//char arr2[] = "010110110";
+	//char arr1[] = "ABCBDAB";
+	//char arr2[] = "BDCABA";
+	char arr1[] = "10010101";
+	char arr2[] = "010110110";
 	int m = strlen(arr1), n = strlen(arr2), i = 0;
 	int **c, **b;
 	c = (int **)malloc((m + 1) * sizeof(int *));
@@ -80,7 +123,11 @@ void testLongestCommonSubsequence()
 
 	LCSLength(c, b, m, n, arr1, arr2);
 	printf("LCS Length : %d\n", c[m][n]);
-	printf("LCS is : \n");
+	printf("LCS is :\n");
+	PrintLCS(b, arr1, m - 1, n - 1);
+	printf("\n");
+	printf("Memorized LCS Length : %d\n", MemorizedLCSLength(c, b, m, n, arr1, arr2));
+	printf("Memorized LCS :\n");
 	PrintLCS(b, arr1, m - 1, n - 1);
 	printf("\n");
 
