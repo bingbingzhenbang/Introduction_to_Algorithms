@@ -106,12 +106,43 @@ void PrintLCS(int **b, char *X, int i, int j)
 	}
 }
 
+int LCSLengthLeastMemory(int m, int n, char *X, char *Y)
+{
+	int i = 0, j = 0, p = 0, q = 0, rt = 0;
+	int *c = (int*)malloc(n * sizeof(int));
+	for (i = 0; i < n; ++i)
+		c[i] = 0;
+	for (i = 0; i < m; ++i)
+	{
+		p = c[0];
+		if (X[i] == Y[0])
+			c[0] = 1;
+		for (j = 1; j < n; ++j)
+		{
+			q = p;
+			p = c[j];
+			if (X[i] == Y[j])
+				c[j] = q + 1;
+			else
+			{
+				if (c[j] < c[j - 1])
+					c[j] = c[j - 1];
+			}
+		}
+	}
+	rt = c[n - 1];
+	free(c);
+	return rt;
+}
+
 void testLongestCommonSubsequence()
 {
 	//char arr1[] = "ABCBDAB";
 	//char arr2[] = "BDCABA";
-	char arr1[] = "10010101";
-	char arr2[] = "010110110";
+	//char arr1[] = "10010101";
+	//char arr2[] = "010110110";
+	char arr1[] = "ACCGGTCGAGTGCGCGGAAGCCGGCCGAA";
+	char arr2[] = "GTCGTTCGGAATGCCGTTGCTCTGTAAA";
 	int m = strlen(arr1), n = strlen(arr2), i = 0;
 	int **c, **b;
 	c = (int **)malloc((m + 1) * sizeof(int *));
@@ -130,6 +161,7 @@ void testLongestCommonSubsequence()
 	printf("Memorized LCS :\n");
 	PrintLCS(b, arr1, m - 1, n - 1);
 	printf("\n");
+	printf("LCS Length Least Memory : %d\n", LCSLengthLeastMemory(m, n, arr1, arr2));
 
 	for (i = 0; i < m + 1; ++i)
 		free(c[i]);
