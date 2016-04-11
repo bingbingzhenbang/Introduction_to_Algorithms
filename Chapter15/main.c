@@ -4,6 +4,7 @@ void testMatrixChainMultiplication();
 void testLongestCommonSubsequence();
 void testOptimalBinarySearchTrees();
 void testLongestMonotonicallyIncreasingSubsequence();
+void testOptimalBinarySearchTrees();
 
 int main()
 {
@@ -11,6 +12,7 @@ int main()
 	//testAssemblyLineSchedulingLessMemory();
 	//testMatrixChainMultiplication();
 	//testLongestCommonSubsequence();
-	testLongestMonotonicallyIncreasingSubsequence();
+	//testLongestMonotonicallyIncreasingSubsequence();
+	testOptimalBinarySearchTrees();
 	return 0;
 }
