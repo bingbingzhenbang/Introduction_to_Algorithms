@@ -75,6 +75,45 @@ void ConstructOptimalBST(int **root, int size, int i, int j)
 	}
 }
 
+void FastOptimalBST(double **e, double **w, int **root, double *p, double *q, int size)
+{
+	int i = 0, j = 0, len = 0, r = 0;
+	double t = 0.0;
+	for (i = 0; i <= size; ++i)
+	{
+		e[i][i] = q[i];
+		w[i][i] = q[i];
+	}
+	for (i = 0; i < size; ++i)
+		root[i][i] = i;
+	for (len = 1; len <= size; ++len)
+	{
+		for (i = 0; i <= size - len; ++i)
+		{
+			j = i + len;
+			if (len == 1)
+			{
+				root[i][j - 1] = i;
+				e[i][j] = p[i] + 2 * q[i] + 2 * q[i + 1];
+			}
+			else
+			{
+				e[i][j] = DOUBLE_MAX;
+				w[i][j] = w[i][j - 1] + p[j - 1] + q[j];
+				for (r = root[i][j - 2]; r <= root[i + 1][j - 1]; ++r)
+				{
+					t = e[i][r] + e[r + 1][j] + w[i][j];
+					if (t < e[i][j])
+					{
+						e[i][j] = t;
+						root[i][j - 1] = r;
+					}
+				}
+			}
+		}
+	}
+}
+
 void testOptimalBinarySearchTrees()
 {
 	//int size = 5;
@@ -113,7 +152,25 @@ void testOptimalBinarySearchTrees()
 		for (j = size; j >= i; --j)
 			printf("%f  ", w[i][j]);
 		printf("\n");
-	}	printf("table root :\n");
+	}	
+	printf("table root :\n");
+	for (i = 0; i < size; ++i)
+	{
+		for (j = size - 1; j >= i; --j)
+			printf("%d  ", root[i][j] + 1);
+		printf("\n");
+	}
+	FastOptimalBST(e, w, root, p, q, size);
+	printf("Fast Minimum cost : %f\n", e[0][size]);
+	ConstructOptimalBST(root, size, 0, size - 1);
+	printf("Fast table e :\n");
+	for (i = 0; i < size + 1; ++i)
+	{
+		for (j = size; j >= i; --j)
+			printf("%f  ", e[i][j]);
+		printf("\n");
+	}
+	printf("Fast table root :\n");
 	for (i = 0; i < size; ++i)
 	{
 		for (j = size - 1; j >= i; --j)
