@@ -1,7 +1,9 @@
 void testActivitySelectionProblem();
+void testKnapsack();
 
 int main()
 {
-	testActivitySelectionProblem();
+	//testActivitySelectionProblem();
+	testKnapsack();
 	return 0;
 }
