@@ -79,6 +79,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActivitySelectionProblem.cpp" />
+    <ClCompile Include="HuffmanCodes.cpp" />
+    <ClCompile Include="Knapsack.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
