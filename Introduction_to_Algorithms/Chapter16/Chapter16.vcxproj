@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActivitySelectionProblem.cpp" />
+    <ClCompile Include="GasStation.cpp" />
     <ClCompile Include="HuffmanCodes.cpp" />
     <ClCompile Include="Knapsack.cpp" />
     <ClCompile Include="main.cpp" />
