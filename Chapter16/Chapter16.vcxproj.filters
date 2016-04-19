@@ -27,9 +27,6 @@
     <ClCompile Include="HuffmanCodes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SmallestSetOfUnitLengthClosedIntervals.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MaximizePayoff.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
