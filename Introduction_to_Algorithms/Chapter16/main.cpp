@@ -7,7 +7,7 @@ int main()
 {
 	//testActivitySelectionProblem();
 	//testKnapsack();
-	testMaximizePayoff();
-	//testHuffmanCodes();
+	//testMaximizePayoff();
+	testHuffmanCodes();
 	return 0;
 }
