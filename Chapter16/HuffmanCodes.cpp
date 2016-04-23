@@ -50,10 +50,10 @@ CodeNodePtr Huffman(vector<CodeNodePtr> &nodes)
 
 void testHuffmanCodes()
 {
-	//vector<char> codes = {'a', 'b', 'c', 'd', 'e', 'f'};
-	//vector<int> frequencies = { 45, 13, 12, 16, 9, 5 };
-	vector<char> codes = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
-	vector<int> frequencies = { 1, 1, 2, 3, 5, 8, 13, 21 };
+	vector<char> codes = { 'a', 'b', 'c', 'd', 'e', 'f' };
+	vector<int> frequencies = { 45, 13, 12, 16, 9, 5 };
+	//vector<char> codes = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+	//vector<int> frequencies = { 1, 1, 2, 3, 5, 8, 13, 21 };
 	int size = codes.size();
 	vector<CodeNodePtr> nodes;
 	for (int i = 0; i < size; ++i)
