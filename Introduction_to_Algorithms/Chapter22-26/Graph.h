@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <list>
+#include <limits.h>
 
 enum EnumNodeColor
 {
@@ -33,6 +34,13 @@ struct Edge
 inline bool operator==(const Edge &left, const Edge &right)
 {
 	return (left.m_start == right.m_start) && (left.m_end == right.m_end);
+}
+
+inline bool operator<(const Edge &left, const Edge &right)
+{
+	if (left.m_end == right.m_end)
+		return left.m_start < right.m_start;
+	return left.m_end < right.m_end;
 }
 
 class AdjacencylistGraph
