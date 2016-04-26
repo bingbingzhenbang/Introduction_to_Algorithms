@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -72,7 +73,17 @@ AdjacencylistGraph AdjacencylistGraph::Square()
 	AdjacencylistGraph g;
 	if (m_directed)
 	{
-
+		g.m_directed = m_directed;
+		g.m_vertexes.resize(m_vertexes.size());
+		for (int i = 0; i < g.m_vertexes.size(); ++i)
+		{
+			g.m_vertexes[i].m_color = m_vertexes[i].m_color;
+			set<Edge> edges;
+			for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
+				edges.insert(m_vertexes[itr->m_end].m_edges.begin(), m_vertexes[itr->m_end].m_edges.end());
+			for (auto itr = edges.begin(); itr != edges.end(); ++itr)
+				g.m_vertexes[i].m_edges.push_back(Edge(i, itr->m_end, itr->m_weight));
+		}
 	}
 	return g;
 }
@@ -154,6 +165,7 @@ void testAdjacencylistGraph()
 	AdjacencylistGraph g3 = g2.Transpose();
 	AdjacencylistGraph g4 = g2.ToUndirected();
 	AdjacencylistGraph g5 = g3.ToUndirected();
+	AdjacencylistGraph g6 = g2.Square();
 }
 
 void testAdjacencymatrixGraph()
