@@ -62,12 +62,16 @@ class AdjacencymatrixGraph
 private:
 	bool m_directed;
 	std::vector< std::vector<int> > m_matrix;
+private:
+	bool IsNodeSink(int k);
 public:
 	AdjacencymatrixGraph();
 	AdjacencymatrixGraph(const std::vector< std::vector<int> > &matrix, bool directed);
 	std::vector< std::vector<int> >& GetMatrixRef();
 	AdjacencymatrixGraph Transpose();
 	AdjacencymatrixGraph Square();
+	bool BruteUniversalSinkExist();
+	bool UniversalSinkExist();
 };
 
 void testAdjacencylistGraph();

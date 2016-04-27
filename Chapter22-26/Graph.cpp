@@ -156,6 +156,69 @@ AdjacencymatrixGraph AdjacencymatrixGraph::Square()
 	return g;
 }
 
+bool AdjacencymatrixGraph::BruteUniversalSinkExist()
+{
+	if (m_directed)
+	{
+		for (int j = 0; j < m_matrix.size(); ++j)
+		{
+			int sum = 0;
+			for (int i = 0; i < m_matrix.size(); ++i)
+			{
+				if (m_matrix[i][j])
+					++sum;
+			}
+			if (sum == m_matrix.size() - 1)
+				return true;
+		}
+		return false;
+	}
+	else
+		return false;
+}
+
+bool AdjacencymatrixGraph::IsNodeSink(int k)
+{
+	if (m_directed)
+	{
+		for (int j = 0; j < m_matrix.size(); ++j)
+		{
+			if (m_matrix[k][j])
+				return false;
+		}
+		for (int i = 0; i < m_matrix.size(); ++i)
+		{
+			if (i == k)
+				continue;
+			if (m_matrix[i][k] == 0)
+				return false;
+		}
+		return true;
+	}
+	return false;
+}
+
+bool AdjacencymatrixGraph::UniversalSinkExist()
+{
+	if (m_directed)
+	{
+		int i = 0, j = 0;
+		while (i < m_matrix.size() && j < m_matrix.size())
+		{
+			if (m_matrix[i][j])
+				++i;
+			else
+				++j;
+		}
+		if (i >= m_matrix.size())
+			return false;
+		else
+			return IsNodeSink(i);
+	}
+	else
+		return false;
+}
+
 void testAdjacencylistGraph()
 {
 	vector< vector<int> > m1 = { { 0, 1, 0, 0, 1 }, { 1, 0, 1, 1, 1 }, { 0, 1, 0, 1, 0 }, { 0, 1, 1, 0, 1 }, { 1, 1, 0, 1, 0 } };
@@ -165,7 +228,7 @@ void testAdjacencylistGraph()
 	AdjacencylistGraph g3 = g2.Transpose();
 	AdjacencylistGraph g4 = g2.ToUndirected();
 	AdjacencylistGraph g5 = g3.ToUndirected();
-	AdjacencylistGraph g6 = g2.Square();
+	AdjacencylistGraph g6 = g3.Square();
 }
 
 void testAdjacencymatrixGraph()
@@ -174,7 +237,13 @@ void testAdjacencymatrixGraph()
 	AdjacencymatrixGraph g1(m1, true);
 	AdjacencymatrixGraph g2 = g1.Transpose();
 	AdjacencylistGraph g3(g2.GetMatrixRef(), true);
-	AdjacencymatrixGraph g4 = g1.Square();
+	AdjacencymatrixGraph g4 = g2.Square();
+	vector< vector<int> > m2 = { { 0, 0, 0, 0 }, { 1, 0, 1, 0 }, { 1, 0, 0, 1 }, { 1, 0, 0, 0 } };
+	AdjacencymatrixGraph g5(m2, true);
+	bool rt0 = g4.BruteUniversalSinkExist();
+	bool rt1 = g4.UniversalSinkExist();
+	bool rt2 = g5.BruteUniversalSinkExist();
+	bool rt3 = g5.UniversalSinkExist();
 }
 
 void testBFS()
