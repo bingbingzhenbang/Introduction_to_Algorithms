@@ -32,7 +32,6 @@ AdjacencylistGraph AdjacencylistGraph::Transpose()
 		g.m_vertexes.resize(m_vertexes.size());
 		for (int i = 0; i < m_vertexes.size(); ++i)
 		{
-			g.m_vertexes[i].m_color = m_vertexes[i].m_color;
 			for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
 				g.m_vertexes[itr->m_end].m_edges.push_back(Edge(itr->m_end, itr->m_start, itr->m_weight));
 		}
@@ -51,7 +50,6 @@ AdjacencylistGraph AdjacencylistGraph::ToUndirected()
 		g.m_vertexes.resize(m_vertexes.size());
 		for (int i = 0; i < m_vertexes.size(); ++i)
 		{
-			g.m_vertexes[i].m_color = m_vertexes[i].m_color;
 			for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
 			{
 				if (itr->m_start == itr->m_end)
@@ -77,7 +75,6 @@ AdjacencylistGraph AdjacencylistGraph::Square()
 		g.m_vertexes.resize(m_vertexes.size());
 		for (int i = 0; i < g.m_vertexes.size(); ++i)
 		{
-			g.m_vertexes[i].m_color = m_vertexes[i].m_color;
 			set<Edge> edges;
 			for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
 				edges.insert(m_vertexes[itr->m_end].m_edges.begin(), m_vertexes[itr->m_end].m_edges.end());
@@ -88,8 +85,10 @@ AdjacencylistGraph AdjacencylistGraph::Square()
 	return g;
 }
 
-void AdjacencylistGraph::BFS(int s)
+void AdjacencylistGraph::BFS(std::vector<int> &parent, std::vector<int> &distance, int s)
 {
+	parent.resize(m_vertexes.size(), -1);
+	distance.resize(m_vertexes.size(), INT_MAX);
 
 }
 
@@ -248,5 +247,16 @@ void testAdjacencymatrixGraph()
 
 void testBFS()
 {
-
+	vector< vector<int> > m1 = { { 0, 1, 0, 0, 1, 0, 0, 0 }, 
+	                             { 1, 0, 0, 0, 0, 1, 0, 0 }, 
+								 { 0, 0, 0, 1, 0, 1, 1, 0 }, 
+								 { 0, 0, 1, 0, 0, 0, 1, 1 }, 
+								 { 1, 0, 0, 0, 0, 0, 0, 0 },
+								 { 0, 1, 1, 0, 0, 0, 1, 0 },
+								 { 0, 0, 1, 1, 0, 1, 0, 1 },
+								 { 0, 0, 0, 1, 0, 0, 1, 0 }
+	};
+	AdjacencylistGraph g1(m1, false);
+	vector<int> parent, distance;
+	g1.BFS(parent, distance, 1);
 }

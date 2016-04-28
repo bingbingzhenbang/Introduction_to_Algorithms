@@ -16,10 +16,7 @@ struct Edge;
 
 struct Vertex
 {
-	EnumNodeColor m_color;
 	std::list<Edge> m_edges;
-	Vertex()
-		: m_color(EnumNodeColor_white){}
 };
 
 struct Edge
@@ -54,7 +51,7 @@ public:
 	AdjacencylistGraph Transpose();
 	AdjacencylistGraph ToUndirected();
 	AdjacencylistGraph Square();
-	void BFS(int s);
+	void BFS(std::vector<int> &parent, std::vector<int> &distance, int s);
 };
 
 class AdjacencymatrixGraph
