@@ -2,7 +2,8 @@
 
 int main()
 {
-	testAdjacencylistGraph();
-	testAdjacencymatrixGraph();
+	//testAdjacencylistGraph();
+	//testAdjacencymatrixGraph();
+	testBFS();
 	return 0;
 }
