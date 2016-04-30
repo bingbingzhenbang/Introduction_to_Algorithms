@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include <algorithm>
 #include <set>
+#include <queue>
 
 using namespace std;
 
@@ -87,9 +88,30 @@ AdjacencylistGraph AdjacencylistGraph::Square()
 
 void AdjacencylistGraph::BFS(std::vector<int> &parent, std::vector<int> &distance, int s)
 {
-	parent.resize(m_vertexes.size(), -1);
-	distance.resize(m_vertexes.size(), INT_MAX);
-
+	vector<int> colors(m_vertexes.size(), EnumNodeColor_white);
+	parent = vector<int>(m_vertexes.size(), -1);
+	distance = vector<int>(m_vertexes.size(), INT_MAX);
+	colors[s] = EnumNodeColor_gray;
+	distance[s] = 0;
+	queue<int> Q;
+	Q.push(s);
+	while (!Q.empty())
+	{
+		int u = Q.front();
+		Q.pop();
+		colors[u] = EnumNodeColor_black;
+		for (auto itr = m_vertexes[u].m_edges.begin(); itr != m_vertexes[u].m_edges.end(); ++itr)
+		{
+			int v = itr->m_end;
+			if (colors[v] == EnumNodeColor_white)
+			{
+				colors[v] = EnumNodeColor_gray;
+				parent[v] = u;
+				distance[v] = distance[u] + 1;
+				Q.push(v);
+			}
+		}
+	}
 }
 
 AdjacencymatrixGraph::AdjacencymatrixGraph()
@@ -259,4 +281,8 @@ void testBFS()
 	AdjacencylistGraph g1(m1, false);
 	vector<int> parent, distance;
 	g1.BFS(parent, distance, 1);
+	g1.BFS(parent, distance, 3);
+	vector< vector<int> > m2 = { { 0, 1, 0, 1, 0, 0 }, { 0, 0, 0, 0, 1, 0 }, { 0, 0, 0, 0, 1, 1 }, { 0, 1, 0, 0, 0, 0 }, { 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 1 } };
+	AdjacencylistGraph g2(m2, true);
+	g2.BFS(parent, distance, 2);
 }
