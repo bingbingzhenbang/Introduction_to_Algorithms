@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <set>
 #include <queue>
+#include <iostream>
 
 using namespace std;
 
@@ -240,6 +241,34 @@ bool AdjacencymatrixGraph::UniversalSinkExist()
 		return false;
 }
 
+void AdjacencymatrixGraph::BFS(std::vector<int> &parent, std::vector<int> &distance, int s)
+{
+	vector<int> colors(m_matrix.size(), EnumNodeColor_white);
+	parent = vector<int>(m_matrix.size(), -1);
+	distance = vector<int>(m_matrix.size(), INT_MAX);
+	colors[s] = EnumNodeColor_gray;
+	parent[s] = -1;
+	distance[s] = 0;
+	queue<int> Q;
+	Q.push(s);
+	while (!Q.empty())
+	{
+		int u = Q.front();
+		Q.pop();
+		colors[u] = EnumNodeColor_black;
+		for (int j = 0; j < m_matrix.size(); ++j)
+		{
+			if (m_matrix[u][j] && colors[j] == EnumNodeColor_white)
+			{
+				colors[j] = EnumNodeColor_gray;
+				parent[j] = u;
+				distance[j] = distance[u] + 1;
+				Q.push(j);
+			}
+		}
+	}
+}
+
 void testAdjacencylistGraph()
 {
 	vector< vector<int> > m1 = { { 0, 1, 0, 0, 1 }, { 1, 0, 1, 1, 1 }, { 0, 1, 0, 1, 0 }, { 0, 1, 1, 0, 1 }, { 1, 1, 0, 1, 0 } };
@@ -281,8 +310,17 @@ void testBFS()
 	AdjacencylistGraph g1(m1, false);
 	vector<int> parent, distance;
 	g1.BFS(parent, distance, 1);
-	g1.BFS(parent, distance, 3);
-	vector< vector<int> > m2 = { { 0, 1, 0, 1, 0, 0 }, { 0, 0, 0, 0, 1, 0 }, { 0, 0, 0, 0, 1, 1 }, { 0, 1, 0, 0, 0, 0 }, { 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 1 } };
-	AdjacencylistGraph g2(m2, true);
-	g2.BFS(parent, distance, 2);
+	//g1.BFS(parent, distance, 3);
+	//vector< vector<int> > m2 = { { 0, 1, 0, 1, 0, 0 }, { 0, 0, 0, 0, 1, 0 }, { 0, 0, 0, 0, 1, 1 }, { 0, 1, 0, 0, 0, 0 }, { 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 1 } };
+	//AdjacencylistGraph g2(m2, true);
+	//g2.BFS(parent, distance, 2);
+	vector<int> mparent, mdistance;
+	AdjacencymatrixGraph g3(m1, false);
+	g3.BFS(mparent, mdistance, 1);
+	//AdjacencymatrixGraph g4(m2, true);
+	//g4.BFS(mparent, mdistance, 2);
+	if (parent == mparent && distance == mdistance)
+		cout << "Correct !" << endl;
+	else
+		cout << "Error !" << endl;
 }

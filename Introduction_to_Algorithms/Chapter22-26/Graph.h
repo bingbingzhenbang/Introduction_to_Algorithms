@@ -69,6 +69,7 @@ public:
 	AdjacencymatrixGraph Square();
 	bool BruteUniversalSinkExist();
 	bool UniversalSinkExist();
+	void BFS(std::vector<int> &parent, std::vector<int> &distance, int s);
 };
 
 void testAdjacencylistGraph();
