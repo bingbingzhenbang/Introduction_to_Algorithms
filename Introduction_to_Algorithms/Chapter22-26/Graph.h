@@ -72,9 +72,4 @@ public:
 	void BFS(std::vector<int> &parent, std::vector<int> &distance, int s);
 };
 
-void testAdjacencylistGraph();
-void testAdjacencymatrixGraph();
-void testBFS();
-void testDFS();
-
 #endif // GRAPH_H
