@@ -75,5 +75,6 @@ public:
 void testAdjacencylistGraph();
 void testAdjacencymatrixGraph();
 void testBFS();
+void testDFS();
 
 #endif // GRAPH_H
