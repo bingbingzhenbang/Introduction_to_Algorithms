@@ -4,6 +4,7 @@ int main()
 {
 	//testAdjacencylistGraph();
 	//testAdjacencymatrixGraph();
-	testBFS();
+	//testBFS();
+	testDFS();
 	return 0;
 }

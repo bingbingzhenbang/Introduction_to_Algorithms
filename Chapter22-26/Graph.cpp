@@ -324,3 +324,8 @@ void testBFS()
 	else
 		cout << "Error !" << endl;
 }
+
+void testDFS()
+{
+
+}
