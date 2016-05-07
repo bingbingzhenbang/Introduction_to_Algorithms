@@ -52,6 +52,9 @@ public:
 	AdjacencylistGraph ToUndirected();
 	AdjacencylistGraph Square();
 	void BFS(std::vector<int> &parent, std::vector<int> &distance, int s);
+	//void BFSTraverse(std::vector<int> &path, int s);
+	void DFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f);
+	void DFSVisit(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f, int &time, std::vector<int> &colors, int u);
 };
 
 class AdjacencymatrixGraph

@@ -99,7 +99,6 @@ void AdjacencylistGraph::BFS(std::vector<int> &parent, std::vector<int> &distanc
 	{
 		int u = Q.front();
 		Q.pop();
-		colors[u] = EnumNodeColor_black;
 		for (auto itr = m_vertexes[u].m_edges.begin(); itr != m_vertexes[u].m_edges.end(); ++itr)
 		{
 			int v = itr->m_end;
@@ -111,7 +110,49 @@ void AdjacencylistGraph::BFS(std::vector<int> &parent, std::vector<int> &distanc
 				Q.push(v);
 			}
 		}
+		colors[u] = EnumNodeColor_black;
 	}
+}
+
+//void AdjacencylistGraph::BFSTraverse(std::vector<int> &path, int s)
+//{
+//	if (m_directed)
+//		return;
+//	path.clear();
+//
+//
+//}
+
+void AdjacencylistGraph::DFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f)
+{
+	parent = vector<int>(m_vertexes.size(), -1);
+	d = vector<int>(m_vertexes.size(), INT_MAX);
+	f = vector<int>(m_vertexes.size(), INT_MAX);
+	int time = 0;
+	vector<int> colors(m_vertexes.size(), EnumNodeColor_white);
+	for (int i = 0; i < m_vertexes.size(); ++i)
+	{
+		if (colors[i] == EnumNodeColor_white)
+			DFSVisit(parent, d, f, time, colors, i);
+	}
+}
+
+void AdjacencylistGraph::DFSVisit(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f, int &time, std::vector<int> &colors, int u)
+{
+	++time;
+	d[u] = time;
+	colors[u] = EnumNodeColor_gray;
+	for (auto itr = m_vertexes[u].m_edges.begin(); itr != m_vertexes[u].m_edges.end(); ++itr)
+	{
+		if (colors[itr->m_end] == EnumNodeColor_white)
+		{
+			parent[itr->m_end] = u;
+			DFSVisit(parent, d, f, time, colors, itr->m_end);
+		}
+	}
+	++time;
+	f[u] = time;
+	colors[u] = EnumNodeColor_black;
 }
 
 AdjacencymatrixGraph::AdjacencymatrixGraph()
