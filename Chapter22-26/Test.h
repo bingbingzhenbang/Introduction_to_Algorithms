@@ -4,6 +4,7 @@
 void testAdjacencylistGraph();
 void testAdjacencymatrixGraph();
 void testBFS();
+void testBFSTraverse();
 void testDFS();
 
 #endif // TEST_H
