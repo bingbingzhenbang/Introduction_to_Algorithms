@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <set>
 #include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -153,6 +154,53 @@ void AdjacencylistGraph::DFSVisit(std::vector<int> &parent, std::vector<int> &d,
 	++time;
 	f[u] = time;
 	colors[u] = EnumNodeColor_black;
+}
+
+void AdjacencylistGraph::StackDFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f)
+{
+	parent = vector<int>(m_vertexes.size(), -1);
+	d = vector<int>(m_vertexes.size(), INT_MAX);
+	f = vector<int>(m_vertexes.size(), INT_MAX);
+	int time = 0;
+	vector<int> colors(m_vertexes.size(), EnumNodeColor_white);
+	stack<int> allnodes;
+	for (int i = 0; i < m_vertexes.size(); )
+	{
+		if (colors[i] == EnumNodeColor_white)
+		{
+			++time;
+			d[i] = time;
+			colors[i] = EnumNodeColor_gray;
+			allnodes.push(i);
+			while (!allnodes.empty())
+			{
+				int u = allnodes.top();
+				bool finished = true;
+				for (auto itr = m_vertexes[u].m_edges.begin(); itr != m_vertexes[u].m_edges.end(); ++itr)
+				{
+					if (colors[itr->m_end] == EnumNodeColor_white)
+					{
+						parent[itr->m_end] = u;
+						++time;
+						d[itr->m_end] = time;
+						colors[itr->m_end] = EnumNodeColor_gray;
+						allnodes.push(itr->m_end);
+						finished = false;
+						break;
+					}
+				}
+				if (finished)
+				{
+					++time;
+					f[u] = time;
+					colors[u] = EnumNodeColor_black;
+					allnodes.pop();
+				}
+			}
+		}
+		else
+			++i;
+	}
 }
 
 AdjacencymatrixGraph::AdjacencymatrixGraph()

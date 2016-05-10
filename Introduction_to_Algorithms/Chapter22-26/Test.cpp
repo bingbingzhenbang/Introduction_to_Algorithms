@@ -92,6 +92,11 @@ void testDFS()
 /*9*/{ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 }
 	};
 	AdjacencylistGraph g1(m1, true);
-	vector<int> parent, d, f;
-	g1.DFS(parent, d, f);
+	vector<int> parent1, d1, f1, parent2, d2, f2;
+	g1.DFS(parent1, d1, f1);
+	g1.StackDFS(parent2, d2, f2);
+	if (parent1 == parent2 && d1 == d2 && f1 == f2)
+		cout << "Correct !" << endl;
+	else
+		cout << "Error !" << endl;
 }
