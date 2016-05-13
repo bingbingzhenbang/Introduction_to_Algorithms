@@ -204,6 +204,16 @@ void AdjacencylistGraph::StackDFS(std::vector<int> &parent, std::vector<int> &d,
 	}
 }
 
+list<int> AdjacencylistGraph::TopologicalSort()
+{
+	list<int> result;
+	if (m_directed)
+	{
+
+	}
+	return result;
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {

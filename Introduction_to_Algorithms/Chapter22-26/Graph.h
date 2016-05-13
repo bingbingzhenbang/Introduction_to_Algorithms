@@ -56,6 +56,7 @@ public:
 	void DFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f);
 	void DFSVisit(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f, int &time, std::vector<int> &colors, int u);
 	void StackDFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f);
+	std::list<int> TopologicalSort();
 };
 
 class AdjacencymatrixGraph
