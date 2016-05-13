@@ -6,6 +6,7 @@ int main()
 	//testAdjacencymatrixGraph();
 	//testBFS();
 	//testBFSTraverse();
-	testDFS();
+	//testDFS();
+	testTopologicalSort();
 	return 0;
 }
