@@ -257,6 +257,27 @@ list<int> AdjacencylistGraph::TopologicalSort()
 	return result;
 }
 
+int AdjacencylistGraph::PathsNumber(int s, int t)
+{
+	list<int> sorted = TopologicalSort();
+	list<int>::iterator start = find(sorted.begin(), sorted.end(), s), dest = find(sorted.begin(), sorted.end(), t);
+	if (distance(sorted.begin(), start) > distance(sorted.begin(), dest))
+		return 0;
+	++start;
+	++dest;
+	vector<int> num_paths(m_vertexes.size(), 0);
+	num_paths[s] = 1;
+	AdjacencylistGraph trans = Transpose();
+	for (auto itr = start; itr != dest; ++itr)
+	{
+		int sum = 0;
+		for (auto edge = trans.m_vertexes[*itr].m_edges.begin(); edge != trans.m_vertexes[*itr].m_edges.end(); ++edge)
+			sum += num_paths[edge->m_end];
+		num_paths[*itr] = sum;
+	}
+	return num_paths[t];
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {
