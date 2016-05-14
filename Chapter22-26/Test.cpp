@@ -109,7 +109,7 @@ void testTopologicalSort()
 		/*0*/{ 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0 },
 		/*1*/{ 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
 		/*2*/{ 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0 },
-		/*3*/{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		/*3*/{ 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
 		/*4*/{ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 },
 		/*5*/{ 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0 },
 		/*6*/{ 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -122,10 +122,12 @@ void testTopologicalSort()
 	   /*13*/{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 	};
 	AdjacencylistGraph g1(m1, true);
-	list<int> rt = g1.TopologicalSort();
-	for (auto itr = rt.begin(); itr != rt.end(); ++itr)
-	{
-		cout << (char)('m' + *itr) << " ";
-	}
-	cout << endl;
+	//list<int> rt = g1.TopologicalSort();
+	//for (auto itr = rt.begin(); itr != rt.end(); ++itr)
+	//{
+	//	cout << (char)('m' + *itr) << " ";
+	//}
+	//cout << endl;
+	int num = g1.PathsNumber(3, 9);
+	num = g1.PathsNumber(3, 13);
 }
