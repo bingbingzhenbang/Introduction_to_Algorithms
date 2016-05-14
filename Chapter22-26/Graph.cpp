@@ -278,6 +278,40 @@ int AdjacencylistGraph::PathsNumber(int s, int t)
 	return num_paths[t];
 }
 
+list<int> AdjacencylistGraph::QueueTopologicalSort()
+{
+	list<int> result;
+	if (m_directed)
+	{
+		vector<int> in_degrees(m_vertexes.size(), 0);
+		for (int i = 0; i < m_vertexes.size(); ++i)
+		{
+			for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
+				++in_degrees[itr->m_end];
+		}
+		queue<int> Q;
+		for (int i = 0; i < in_degrees.size(); ++i)
+		{
+			if (in_degrees[i] == 0)
+				Q.push(i);
+		}
+		while (!Q.empty())
+		{
+			int u = Q.front();
+			Q.pop();
+			result.push_back(u);
+			for (auto itr = m_vertexes[u].m_edges.begin(); itr != m_vertexes[u].m_edges.end(); ++itr)
+			{
+				int v = itr->m_end;
+				--in_degrees[v];
+				if (in_degrees[v] == 0)
+					Q.push(v);
+			}
+		}
+	}
+	return result;
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {

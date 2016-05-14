@@ -58,6 +58,7 @@ public:
 	void StackDFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f);
 	std::list<int> TopologicalSort();
 	int PathsNumber(int s, int t);
+	std::list<int> QueueTopologicalSort();
 };
 
 class AdjacencymatrixGraph
