@@ -122,12 +122,13 @@ void testTopologicalSort()
 	   /*13*/{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 	};
 	AdjacencylistGraph g1(m1, true);
-	//list<int> rt = g1.TopologicalSort();
-	//for (auto itr = rt.begin(); itr != rt.end(); ++itr)
-	//{
-	//	cout << (char)('m' + *itr) << " ";
-	//}
-	//cout << endl;
-	int num = g1.PathsNumber(3, 9);
-	num = g1.PathsNumber(3, 13);
+	list<int> rt1 = g1.TopologicalSort();
+	//int num = g1.PathsNumber(3, 9);
+	//num = g1.PathsNumber(3, 13);
+	list<int> rt2 = g1.QueueTopologicalSort();
+	for (auto itr = rt2.begin(); itr != rt2.end(); ++itr)
+	{
+		cout << (char)('m' + *itr) << " ";
+	}
+	cout << endl;
 }
