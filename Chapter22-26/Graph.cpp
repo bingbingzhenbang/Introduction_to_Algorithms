@@ -209,7 +209,50 @@ list<int> AdjacencylistGraph::TopologicalSort()
 	list<int> result;
 	if (m_directed)
 	{
-
+		vector<int> parent(m_vertexes.size(), -1);
+		vector<int> d(m_vertexes.size(), INT_MAX);
+		vector<int> f(m_vertexes.size(), INT_MAX);
+		int time = 0;
+		vector<int> colors(m_vertexes.size(), EnumNodeColor_white);
+		stack< pair< int, list<Edge>::iterator > > nodes_iters;
+		for (int i = 0; i < m_vertexes.size();)
+		{
+			if (colors[i] == EnumNodeColor_white)
+			{
+				d[i] = ++time;
+				colors[i] = EnumNodeColor_gray;
+				nodes_iters.push(pair< int, list<Edge>::iterator >(i, m_vertexes[i].m_edges.begin()));
+				while (!nodes_iters.empty())
+				{
+					int u = nodes_iters.top().first;
+					list<Edge>::iterator edgebegin = nodes_iters.top().second;
+					bool finished = true;
+					for (auto itr = edgebegin; itr != m_vertexes[u].m_edges.end(); ++itr)
+					{
+						if (colors[itr->m_end] == EnumNodeColor_white)
+						{
+							int v = itr->m_end;
+							parent[v] = u;
+							d[v] = ++time;
+							colors[v] = EnumNodeColor_gray;
+							nodes_iters.top().second = ++itr;
+							nodes_iters.push(pair< int, list<Edge>::iterator >(v, m_vertexes[v].m_edges.begin()));
+							finished = false;
+							break;
+						}
+					}
+					if (finished)
+					{
+						f[u] = ++time;
+						colors[u] = EnumNodeColor_black;
+						nodes_iters.pop();
+						result.push_front(u);
+					}
+				}
+			}
+			else
+				++i;
+		}
 	}
 	return result;
 }
