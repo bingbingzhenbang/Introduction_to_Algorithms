@@ -53,12 +53,13 @@ public:
 	AdjacencylistGraph Square();
 	void BFS(std::vector<int> &parent, std::vector<int> &distance, int s);
 	//void BFSTraverse(std::vector<int> &path, int s);
-	void DFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f);
+	void DFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f, const std::vector<int> &assigned_order = std::vector<int>());
 	void DFSVisit(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f, int &time, std::vector<int> &colors, int u);
 	void StackDFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f);
 	std::list<int> TopologicalSort();
 	int PathsNumber(int s, int t);
 	std::list<int> QueueTopologicalSort();
+	std::vector<int> StronglyConnectedComponents();
 };
 
 class AdjacencymatrixGraph

@@ -125,17 +125,25 @@ void AdjacencylistGraph::BFS(std::vector<int> &parent, std::vector<int> &distanc
 //
 //}
 
-void AdjacencylistGraph::DFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f)
+void AdjacencylistGraph::DFS(std::vector<int> &parent, std::vector<int> &d, std::vector<int> &f, const std::vector<int> &assigned_order)
 {
 	parent = vector<int>(m_vertexes.size(), -1);
 	d = vector<int>(m_vertexes.size(), INT_MAX);
 	f = vector<int>(m_vertexes.size(), INT_MAX);
 	int time = 0;
 	vector<int> colors(m_vertexes.size(), EnumNodeColor_white);
+	vector<int> order;
+	if (assigned_order.empty())
+	{
+		for (int i = 0; i < m_vertexes.size(); ++i)
+			order.push_back(i);
+	}
+	else
+		order = assigned_order;
 	for (int i = 0; i < m_vertexes.size(); ++i)
 	{
-		if (colors[i] == EnumNodeColor_white)
-			DFSVisit(parent, d, f, time, colors, i);
+		if (colors[order[i]] == EnumNodeColor_white)
+			DFSVisit(parent, d, f, time, colors, order[i]);
 	}
 }
 
@@ -310,6 +318,17 @@ list<int> AdjacencylistGraph::QueueTopologicalSort()
 		}
 	}
 	return result;
+}
+
+vector<int> AdjacencylistGraph::StronglyConnectedComponents()
+{
+	vector<int> parent(m_vertexes.size(), -1);
+	vector<int> d(m_vertexes.size(), INT_MAX);
+	vector<int> f(m_vertexes.size(), INT_MAX);
+	list<int> orderlist = TopologicalSort();
+	vector<int> assigned_order(orderlist.begin(), orderlist.end());
+	this->Transpose().DFS(parent, d, f, assigned_order);
+	return parent;
 }
 
 AdjacencymatrixGraph::AdjacencymatrixGraph()

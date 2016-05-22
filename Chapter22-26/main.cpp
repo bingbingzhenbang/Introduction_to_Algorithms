@@ -7,6 +7,7 @@ int main()
 	//testBFS();
 	//testBFSTraverse();
 	//testDFS();
-	testTopologicalSort();
+	//testTopologicalSort();
+	testStronglyConnectedComponents();
 	return 0;
 }
