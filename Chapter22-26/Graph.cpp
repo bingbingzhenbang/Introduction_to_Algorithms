@@ -331,6 +331,48 @@ vector<int> AdjacencylistGraph::StronglyConnectedComponents()
 	return parent;
 }
 
+AdjacencylistGraph AdjacencylistGraph::ComponentGraph()
+{
+	AdjacencylistGraph result;
+	if (m_directed)
+	{
+		result.m_directed = true;
+		vector<int> parent = StronglyConnectedComponents();
+		vector<int> scc(m_vertexes.size(), -1);
+		int component_cnt = 0;
+		for (int i = 0; i < parent.size(); ++i)
+		{
+			if (parent[i] == -1)
+			{
+				scc[i] = component_cnt;
+				++component_cnt;
+			}
+		}
+		for (int i = 0; i < m_vertexes.size(); ++i)
+		{
+			int u = i;
+			while (parent[u] != -1)
+				u = parent[u];
+			scc[i] = scc[u];
+		}
+		result.m_vertexes.resize(component_cnt);
+		set<Edge> S;
+		for (int i = 0; i < m_vertexes.size(); ++i)
+		{
+			for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
+			{
+				int x = scc[itr->m_start];
+				int y = scc[itr->m_end];
+				if (x != y)
+					S.insert(Edge(x, y));
+			}
+		}
+		for (auto itr = S.begin(); itr != S.end(); ++itr)
+			result.m_vertexes[itr->m_start].m_edges.push_back(*itr);
+	}
+	return result;
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {
