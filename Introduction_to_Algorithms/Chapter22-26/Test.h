@@ -8,5 +8,6 @@ void testBFSTraverse();
 void testDFS();
 void testTopologicalSort();
 void testStronglyConnectedComponents();
+void testComponentGraph();
 
 #endif // TEST_H

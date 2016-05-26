@@ -35,9 +35,9 @@ inline bool operator==(const Edge &left, const Edge &right)
 
 inline bool operator<(const Edge &left, const Edge &right)
 {
-	if (left.m_end == right.m_end)
-		return left.m_start < right.m_start;
-	return left.m_end < right.m_end;
+	if (left.m_start == right.m_start)
+		return left.m_end < right.m_end;
+	return left.m_start < right.m_start;
 }
 
 class AdjacencylistGraph
@@ -60,6 +60,7 @@ public:
 	int PathsNumber(int s, int t);
 	std::list<int> QueueTopologicalSort();
 	std::vector<int> StronglyConnectedComponents();
+	AdjacencylistGraph ComponentGraph();
 };
 
 class AdjacencymatrixGraph
