@@ -59,7 +59,7 @@ public:
 	std::list<int> TopologicalSort();
 	int PathsNumber(int s, int t);
 	std::list<int> QueueTopologicalSort();
-	std::vector<int> StronglyConnectedComponents();
+	int StronglyConnectedComponents(std::vector<int> &parent, std::vector<int> &scc);
 	AdjacencylistGraph ComponentGraph();
 };
 

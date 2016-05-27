@@ -320,15 +320,31 @@ list<int> AdjacencylistGraph::QueueTopologicalSort()
 	return result;
 }
 
-vector<int> AdjacencylistGraph::StronglyConnectedComponents()
+int AdjacencylistGraph::StronglyConnectedComponents(std::vector<int> &parent, std::vector<int> &scc)
 {
-	vector<int> parent(m_vertexes.size(), -1);
 	vector<int> d(m_vertexes.size(), INT_MAX);
 	vector<int> f(m_vertexes.size(), INT_MAX);
 	list<int> orderlist = TopologicalSort();
 	vector<int> assigned_order(orderlist.begin(), orderlist.end());
 	this->Transpose().DFS(parent, d, f, assigned_order);
-	return parent;
+	scc = vector<int>(m_vertexes.size(), -1);
+	int component_cnt = 0;
+	for (int i = 0; i < parent.size(); ++i)
+	{
+		if (parent[i] == -1)
+		{
+			scc[i] = component_cnt;
+			++component_cnt;
+		}
+	}
+	for (int i = 0; i < m_vertexes.size(); ++i)
+	{
+		int u = i;
+		while (parent[u] != -1)
+			u = parent[u];
+		scc[i] = scc[u];
+	}
+	return component_cnt;
 }
 
 AdjacencylistGraph AdjacencylistGraph::ComponentGraph()
@@ -337,24 +353,8 @@ AdjacencylistGraph AdjacencylistGraph::ComponentGraph()
 	if (m_directed)
 	{
 		result.m_directed = true;
-		vector<int> parent = StronglyConnectedComponents();
-		vector<int> scc(m_vertexes.size(), -1);
-		int component_cnt = 0;
-		for (int i = 0; i < parent.size(); ++i)
-		{
-			if (parent[i] == -1)
-			{
-				scc[i] = component_cnt;
-				++component_cnt;
-			}
-		}
-		for (int i = 0; i < m_vertexes.size(); ++i)
-		{
-			int u = i;
-			while (parent[u] != -1)
-				u = parent[u];
-			scc[i] = scc[u];
-		}
+		vector<int> parent, scc;
+		int component_cnt = StronglyConnectedComponents(parent, scc);
 		result.m_vertexes.resize(component_cnt);
 		set<Edge> S;
 		for (int i = 0; i < m_vertexes.size(); ++i)
