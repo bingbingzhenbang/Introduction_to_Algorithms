@@ -147,7 +147,8 @@ void testStronglyConnectedComponents()
 		/*7*/{ 0, 0, 0, 0, 0, 0, 0, 1 },
 	};
 	AdjacencylistGraph g1(m1, true);
-	vector<int> parent = g1.StronglyConnectedComponents();
+	vector<int> parent, scc;
+	int cnt = g1.StronglyConnectedComponents(parent, scc);
 }
 
 void testComponentGraph()
