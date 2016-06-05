@@ -167,3 +167,17 @@ void testComponentGraph()
 	AdjacencylistGraph g1(m1, true);
 	AdjacencylistGraph g2 = g1.ComponentGraph();
 }
+
+void testEulerTour()
+{
+	vector< vector<int> > m1 = {
+		//     0  1  2  3  4   
+		/*0*/{ 0, 1, 1, 0, 0 },
+		/*1*/{ 1, 0, 1, 0, 0 },
+		/*2*/{ 1, 1, 0, 1, 1 },
+		/*3*/{ 0, 0, 1, 0, 1 },
+		/*4*/{ 0, 0, 1, 1, 0 },
+	};
+	AdjacencylistGraph g1(m1, true);
+	list<int> path = g1.EulerTour();
+}
