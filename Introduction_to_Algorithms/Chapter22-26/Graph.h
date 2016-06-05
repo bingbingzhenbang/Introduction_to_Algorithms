@@ -61,6 +61,7 @@ public:
 	std::list<int> QueueTopologicalSort();
 	int StronglyConnectedComponents(std::vector<int> &parent, std::vector<int> &scc);
 	AdjacencylistGraph ComponentGraph();
+	std::list<int> EulerTour();
 };
 
 class AdjacencymatrixGraph

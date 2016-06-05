@@ -12,7 +12,8 @@ int main()
 	//testDFS();
 	//testTopologicalSort();
 	//testStronglyConnectedComponents();
-	testComponentGraph();
+	//testComponentGraph();
+	testEulerTour();
 	_CrtDumpMemoryLeaks();
 	return 0;
 }

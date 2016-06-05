@@ -373,6 +373,13 @@ AdjacencylistGraph AdjacencylistGraph::ComponentGraph()
 	return result;
 }
 
+std::list<int> AdjacencylistGraph::EulerTour()
+{
+	std::list<int> T;
+
+	return T;
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {

@@ -9,5 +9,6 @@ void testDFS();
 void testTopologicalSort();
 void testStronglyConnectedComponents();
 void testComponentGraph();
+void testEulerTour();
 
 #endif // TEST_H
