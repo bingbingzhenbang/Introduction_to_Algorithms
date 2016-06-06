@@ -375,9 +375,37 @@ AdjacencylistGraph AdjacencylistGraph::ComponentGraph()
 
 std::list<int> AdjacencylistGraph::EulerTour()
 {
+	if (m_vertexes.empty())
+		return std::list<int>();
+	std::vector<Vertex> vertexes = m_vertexes;
 	std::list<int> T;
-
+	T.push_back(0);
+	std::list< std::pair< int, std::list<int>::iterator > > L;
+	L.push_front(pair<int, std::list<int>::iterator>(0, T.begin()));
+	while (!L.empty())
+	{
+		auto iter = L.begin();
+		int v = iter->first;
+		std::list<int>::iterator v_pos = iter->second;
+		L.pop_front();
+		EulerVisit(v, vertexes, L, T, v_pos);
+	}
 	return T;
+}
+
+void AdjacencylistGraph::EulerVisit(int v, std::vector<Vertex> &vertexes, std::list< std::pair< int, std::list<int>::iterator > > &L, std::list<int> &T, std::list<int>::iterator insert_begin)
+{
+	int u = v;
+	while (!vertexes[u].m_edges.empty())
+	{
+		int w = vertexes[u].m_edges.begin()->m_end;
+		vertexes[u].m_edges.pop_front();
+		insert_begin = T.insert(insert_begin, u);
+		if (!vertexes[u].m_edges.empty())
+			L.push_front(pair<int, std::list<int>::iterator>(u, insert_begin));
+		++insert_begin;
+		u = w;
+	}
 }
 
 AdjacencymatrixGraph::AdjacencymatrixGraph()
