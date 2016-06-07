@@ -12,7 +12,7 @@ int main()
 	//testAssemblyLineSchedulingLessMemory();
 	//testMatrixChainMultiplication();
 	//testLongestCommonSubsequence();
-	//testLongestMonotonicallyIncreasingSubsequence();
-	testOptimalBinarySearchTrees();
+	testLongestMonotonicallyIncreasingSubsequence();
+	//testOptimalBinarySearchTrees();
 	return 0;
 }

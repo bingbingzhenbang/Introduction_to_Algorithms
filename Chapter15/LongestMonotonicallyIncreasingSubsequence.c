@@ -148,12 +148,12 @@ void BruteLongestMonotonicallyIncreasingSubsequence(int *data, int size)
 		//}
 		//else
 		//{
-			//for (j = 0; j < s; ++j)
-			//	S[s][j] = S[s - 1][j];
-			//y[s] = x;
-			//S[s][s] = x;
-			//if (s == currentLen)
-			//	++currentLen;
+		//for (j = 0; j < s; ++j)
+		//	S[s][j] = S[s - 1][j];
+		//y[s] = x;
+		//S[s][s] = x;
+		//if (s == currentLen)
+		//	++currentLen;
 		//}
 		// simplified way
 		for (j = 0; j < s; ++j)
@@ -195,6 +195,7 @@ void LongestMonotonicallyIncreasingSubsequence(int *data, int size)
 	currentLen = 1;
 	y[0] = data[0];
 	prev[0] = -1;
+	all_index[0] = 0;
 	for (i = 1; i < size; ++i)
 	{
 		x = data[i];
@@ -241,7 +242,8 @@ void testLongestMonotonicallyIncreasingSubsequence()
 	//int arr[] = { 13, 19, 9, 5, 12, 8, 7, 4, 11, 2, 6, 21 };
 	//int arr[] = { 7, 8, 9, 1, 2, 3, 4 };
 	//int arr[] = { 1, 1, 2, 2, 2, 3, 3, 5, 3 };
-	int arr[] = { 2, 1, 3, 0, 4, 1, 5, 2, 7 };
+	//int arr[] = { 2, 1, 3, 0, 4, 1, 5, 2, 7 };
+	int arr[] = { 3, 5, 6, 2, 5, 4, 19, 5, 6, 7, 12 };
 	int m = sizeof(arr) / sizeof(int), n, i;
 	int *p, **c, **b;
 	p = (int *)malloc(m * sizeof(int));
