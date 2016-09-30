@@ -4,6 +4,7 @@
 #include <queue>
 #include <stack>
 #include <utility>
+#include "../Chapter21/LinkedlistDisjointSet.h"
 
 using namespace std;
 
