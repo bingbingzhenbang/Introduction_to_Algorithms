@@ -13,7 +13,8 @@ int main()
 	//testTopologicalSort();
 	//testStronglyConnectedComponents();
 	//testComponentGraph();
-	testEulerTour();
+	//testEulerTour();
+	testMSTKruskal();
 	_CrtDumpMemoryLeaks();
 	return 0;
 }

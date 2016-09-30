@@ -40,6 +40,13 @@ inline bool operator<(const Edge &left, const Edge &right)
 	return left.m_start < right.m_start;
 }
 
+inline bool WeightLess(const Edge &left, const Edge &right)
+{
+	if (left.m_weight == right.m_weight)
+		return left < right;
+	return left.m_weight < right.m_weight;
+}
+
 class AdjacencylistGraph
 {
 private:
@@ -63,6 +70,7 @@ public:
 	AdjacencylistGraph ComponentGraph();
 	std::list<int> EulerTour();
 	void EulerVisit(int v, std::vector<Vertex> &vertexes, std::list< std::pair< int, std::list<int>::iterator > > &L, std::list<int> &T, std::list<int>::iterator insert_begin);
+	std::vector<Edge> MSTKruskal();
 };
 
 class AdjacencymatrixGraph

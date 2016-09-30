@@ -10,5 +10,6 @@ void testTopologicalSort();
 void testStronglyConnectedComponents();
 void testComponentGraph();
 void testEulerTour();
+void testMSTKruskal();
 
 #endif // TEST_H

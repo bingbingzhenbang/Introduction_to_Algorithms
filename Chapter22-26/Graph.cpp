@@ -409,6 +409,45 @@ void AdjacencylistGraph::EulerVisit(int v, std::vector<Vertex> &vertexes, std::l
 	}
 }
 
+vector<Edge> AdjacencylistGraph::MSTKruskal()
+{
+	vector<Edge> result;
+	if (m_directed || m_vertexes.empty())
+		return result;
+	vector<Edge> E;
+	for (int i = 0; i < m_vertexes.size(); ++i)
+	{
+		for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
+		{
+			if (itr->m_start < itr->m_end)
+				E.push_back(*itr);
+		}
+	}
+	sort(E.begin(), E.end(), WeightLess);
+	vector< shared_ptr<DisjointSetListElement<int> > > allvertexes;
+	for (int i = 0; i < m_vertexes.size(); ++i)
+	{
+		allvertexes.push_back(shared_ptr< DisjointSetListElement<int> >(new DisjointSetListElement<int>(i)));
+	}
+	for (int i = 0; i < m_vertexes.size(); ++i)
+	{
+		MakeLinkedlistDisjointSet(allvertexes[i]);
+	}
+	int edgecnt = 0;
+	for (int i = 0; edgecnt < m_vertexes.size() - 1 && i < E.size(); ++i)
+	{
+		shared_ptr< LinkedlistDisjointSet<int> > su = FindLinkedlistDisjointSet(allvertexes[E[i].m_start]);
+		shared_ptr< LinkedlistDisjointSet<int> > sv = FindLinkedlistDisjointSet(allvertexes[E[i].m_end]);
+		if (su != sv)
+		{
+			result.push_back(E[i]);
+			UnionLinkedlistDisjointSet(allvertexes[E[i].m_start], allvertexes[E[i].m_end]);
+			++edgecnt;
+		}
+	}
+	return result;
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {

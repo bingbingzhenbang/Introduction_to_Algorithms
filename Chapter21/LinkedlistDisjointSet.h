@@ -25,7 +25,7 @@ struct LinkedlistDisjointSet
 };
 
 template <typename T>
-shared_ptr< LinkedlistDisjointSet<T> > MakeSet(shared_ptr< DisjointSetListElement<T> > x)
+shared_ptr< LinkedlistDisjointSet<T> > MakeLinkedlistDisjointSet(shared_ptr< DisjointSetListElement<T> > x)
 {
 	shared_ptr<LinkedlistDisjointSet<T> > s(new LinkedlistDisjointSet<T>());
 	s->m_list.push_back(x.get());
@@ -34,16 +34,16 @@ shared_ptr< LinkedlistDisjointSet<T> > MakeSet(shared_ptr< DisjointSetListElemen
 }
 
 template <typename T>
-shared_ptr< LinkedlistDisjointSet<T> > FindSet(shared_ptr< DisjointSetListElement<T> > x)
+shared_ptr< LinkedlistDisjointSet<T> > FindLinkedlistDisjointSet(shared_ptr< DisjointSetListElement<T> > x)
 {
 	return x->m_setptr;
 }
 
 template <typename T>
-shared_ptr< LinkedlistDisjointSet<T> > Union(shared_ptr< DisjointSetListElement<T> > x, shared_ptr< DisjointSetListElement<T> > y)
+shared_ptr< LinkedlistDisjointSet<T> > UnionLinkedlistDisjointSet(shared_ptr< DisjointSetListElement<T> > x, shared_ptr< DisjointSetListElement<T> > y)
 {
-	shared_ptr< LinkedlistDisjointSet<T> > sx = FindSet(x);
-	shared_ptr< LinkedlistDisjointSet<T> > sy = FindSet(y);
+	shared_ptr< LinkedlistDisjointSet<T> > sx = FindLinkedlistDisjointSet(x);
+	shared_ptr< LinkedlistDisjointSet<T> > sy = FindLinkedlistDisjointSet(y);
 	if (sx == sy)
 		return sx;
 	if (sx->m_list.size() < sy->m_list.size())
