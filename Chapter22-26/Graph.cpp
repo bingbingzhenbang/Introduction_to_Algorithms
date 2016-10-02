@@ -5,6 +5,7 @@
 #include <stack>
 #include <utility>
 #include "../Chapter21/LinkedlistDisjointSet.h"
+#include "PrimMinHeap.h"
 
 using namespace std;
 
@@ -443,6 +444,36 @@ vector<Edge> AdjacencylistGraph::MSTKruskal()
 			result.push_back(E[i]);
 			UnionLinkedlistDisjointSet(allvertexes[E[i].m_start], allvertexes[E[i].m_end]);
 			++edgecnt;
+		}
+	}
+	return result;
+}
+
+vector<Edge> AdjacencylistGraph::MSTPrim(int r)
+{
+	vector<Edge> result;
+	if (m_directed || m_vertexes.empty())
+		return result;
+	vector<int> parent(m_vertexes.size(), -1);
+	vector<VertexKey> keys(m_vertexes.size(), VertexKey(0, INT_MAX));
+	for (int i = 0; i < m_vertexes.size(); ++i)
+		keys[i].m_VertexIndex = i;
+	keys[r].m_Key = 0;
+	PrimMinHeap Q(keys);
+	while (!Q.IsEmpty())
+	{
+		VertexKey t = Q.ExtractMin();
+		int u = t.m_VertexIndex, w = t.m_Key;
+		if (parent[u] != -1)
+			result.push_back(Edge(parent[u], u, w));
+		for (auto itr = m_vertexes[u].m_edges.begin(); itr != m_vertexes[u].m_edges.end(); ++itr)
+		{
+			int v = itr->m_end;
+			if (Q.m_IndexInHeap[v] != -1 && itr->m_weight < Q.m_HeapData[Q.m_IndexInHeap[v]].m_Key)
+			{
+				parent[v] = u;
+				Q.DecreaseKey(Q.m_IndexInHeap[v], itr->m_weight);
+			}
 		}
 	}
 	return result;

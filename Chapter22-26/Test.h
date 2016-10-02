@@ -11,5 +11,6 @@ void testStronglyConnectedComponents();
 void testComponentGraph();
 void testEulerTour();
 void testMSTKruskal();
+void testMSTPrim();
 
 #endif // TEST_H
