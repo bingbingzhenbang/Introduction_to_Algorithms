@@ -23,6 +23,7 @@ void testLinkedlistDisjointSet()
 	UnionLinkedlistDisjointSet(allsets[0], allsets[4]);
 	UnionLinkedlistDisjointSet(allsets[10], allsets[12]);
 	//Union(allsets[0], allsets[9]);
+	cout << "testLinkedlistDisjointSet :" << endl;
 	shared_ptr< LinkedlistDisjointSet<int> > s1 = FindLinkedlistDisjointSet(allsets[1]);
 	for (auto itr = s1->m_list.begin(); itr != s1->m_list.end(); ++itr)
 		cout << (*itr)->m_object + 1 << " ";

@@ -70,7 +70,8 @@ public:
 	AdjacencylistGraph ComponentGraph();
 	std::list<int> EulerTour();
 	void EulerVisit(int v, std::vector<Vertex> &vertexes, std::list< std::pair< int, std::list<int>::iterator > > &L, std::list<int> &T, std::list<int>::iterator insert_begin);
-	std::vector<Edge> MSTKruskal();
+	std::vector<Edge> MSTKruskalByLinkedlistDisjointSet();
+	std::vector<Edge> MSTKruskalByArrayDisjointSet();
 	std::vector<Edge> MSTPrim(int r);
 };
 

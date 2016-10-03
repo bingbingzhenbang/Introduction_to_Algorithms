@@ -5,6 +5,7 @@
 #include <stack>
 #include <utility>
 #include "../Chapter21/LinkedlistDisjointSet.h"
+#include "../Chapter21/ArrayDisjointSet.h"
 #include "PrimHeap.h"
 
 using namespace std;
@@ -410,7 +411,7 @@ void AdjacencylistGraph::EulerVisit(int v, std::vector<Vertex> &vertexes, std::l
 	}
 }
 
-vector<Edge> AdjacencylistGraph::MSTKruskal()
+vector<Edge> AdjacencylistGraph::MSTKruskalByLinkedlistDisjointSet()
 {
 	vector<Edge> result;
 	if (m_directed || m_vertexes.empty())
@@ -443,6 +444,37 @@ vector<Edge> AdjacencylistGraph::MSTKruskal()
 		{
 			result.push_back(E[i]);
 			UnionLinkedlistDisjointSet(allvertexes[E[i].m_start], allvertexes[E[i].m_end]);
+			++edgecnt;
+		}
+	}
+	return result;
+}
+
+vector<Edge> AdjacencylistGraph::MSTKruskalByArrayDisjointSet()
+{
+	vector<Edge> result;
+	if (m_directed || m_vertexes.empty())
+		return result;
+	vector<Edge> E;
+	for (int i = 0; i < m_vertexes.size(); ++i)
+	{
+		for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
+		{
+			if (itr->m_start < itr->m_end)
+				E.push_back(*itr);
+		}
+	}
+	sort(E.begin(), E.end(), WeightLess);
+	ArrayDisjointSet S(m_vertexes.size());
+	int edgecnt = 0;
+	for (int i = 0; edgecnt < m_vertexes.size() - 1 && i < E.size(); ++i)
+	{
+		int su = S.FindSet(E[i].m_start);
+		int sv = S.FindSet(E[i].m_end);
+		if (su != sv)
+		{
+			result.push_back(E[i]);
+			S.Union(E[i].m_start, E[i].m_end);
 			++edgecnt;
 		}
 	}

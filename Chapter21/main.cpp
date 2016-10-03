@@ -3,10 +3,12 @@
 #include <crtdbg.h>
 
 void testLinkedlistDisjointSet();
+void testArrayDisjointSet();
 
 int main()
 {
 	testLinkedlistDisjointSet();
+	testArrayDisjointSet();
 	_CrtDumpMemoryLeaks();
 	return 0;
 }

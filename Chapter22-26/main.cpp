@@ -14,8 +14,8 @@ int main()
 	//testStronglyConnectedComponents();
 	//testComponentGraph();
 	//testEulerTour();
-	//testMSTKruskal();
-	testMSTPrim();
+	testMSTKruskal();
+	//testMSTPrim();
 	_CrtDumpMemoryLeaks();
 	return 0;
 }

@@ -208,7 +208,8 @@ void testMSTKruskal()
 		/*8*/{ 0, 0, 2, 0, 0, 0, 6, 7, 0 },
 	};
 	AdjacencylistGraph g1(m1, false);
-	vector<Edge> rt1 = g1.MSTKruskal();
+	vector<Edge> rt11 = g1.MSTKruskalByLinkedlistDisjointSet();
+	vector<Edge> rt12 = g1.MSTKruskalByArrayDisjointSet();
 	vector< vector<int> > m2 = {
 		//     0  1  2  3  4  5  6   
 		/*0*/{ 0, 2, 4, 1, 0, 0, 0 },
@@ -220,7 +221,8 @@ void testMSTKruskal()
 		/*6*/{ 0, 0, 0, 4, 6, 1, 0 },
 	};
 	AdjacencylistGraph g2(m2, false);
-	vector<Edge> rt2 = g2.MSTKruskal();
+	vector<Edge> rt21 = g2.MSTKruskalByLinkedlistDisjointSet();
+	vector<Edge> rt22 = g2.MSTKruskalByArrayDisjointSet();
 }
 
 void testMSTPrim()
