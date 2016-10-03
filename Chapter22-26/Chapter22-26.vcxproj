@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="PrimHeap.h" />
     <ClInclude Include="PrimMinHeap.h" />
     <ClInclude Include="Test.h" />
   </ItemGroup>

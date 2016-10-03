@@ -5,7 +5,7 @@
 #include <stack>
 #include <utility>
 #include "../Chapter21/LinkedlistDisjointSet.h"
-#include "PrimMinHeap.h"
+#include "PrimHeap.h"
 
 using namespace std;
 
@@ -462,7 +462,7 @@ vector<Edge> AdjacencylistGraph::MSTPrim(int r)
 	PrimMinHeap Q(keys);
 	while (!Q.IsEmpty())
 	{
-		VertexKey t = Q.ExtractMin();
+		VertexKey t = Q.ExtractTop();
 		int u = t.m_VertexIndex, w = t.m_Key;
 		if (parent[u] != -1)
 			result.push_back(Edge(parent[u], u, w));
@@ -472,7 +472,7 @@ vector<Edge> AdjacencylistGraph::MSTPrim(int r)
 			if (Q.m_IndexInHeap[v] != -1 && itr->m_weight < Q.m_HeapData[Q.m_IndexInHeap[v]].m_Key)
 			{
 				parent[v] = u;
-				Q.DecreaseKey(Q.m_IndexInHeap[v], itr->m_weight);
+				Q.ModifyKey(Q.m_IndexInHeap[v], itr->m_weight);
 			}
 		}
 	}

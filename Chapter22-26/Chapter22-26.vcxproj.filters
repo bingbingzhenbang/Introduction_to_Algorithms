@@ -38,5 +38,8 @@
     <ClInclude Include="PrimMinHeap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PrimHeap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
