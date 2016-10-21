@@ -2,14 +2,18 @@
 #define POINT_H
 
 #include <cmath>
+#include <tuple>
 
 using std::sqrt;
+using std::tuple;
 
 struct Point
 {
 	double m_x;
 	double m_y;
 };
+
+typedef tuple<Point, Point, double> PointDistance;
 
 inline bool XLess(const Point &l, const Point &r)
 {
