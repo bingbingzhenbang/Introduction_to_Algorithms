@@ -15,6 +15,11 @@ struct Point
 
 typedef tuple<Point, Point, double> PointDistance;
 
+inline bool operator==(const Point &l, const Point &r)
+{
+	return (l.m_x == r.m_x) && (l.m_y == r.m_y);
+}
+
 inline bool XLess(const Point &l, const Point &r)
 {
 	if (l.m_x == r.m_x)
