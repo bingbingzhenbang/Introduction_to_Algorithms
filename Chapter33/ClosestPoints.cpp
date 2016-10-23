@@ -35,7 +35,7 @@ PointDistance BruteForceClosetPoints(const vector<Point> &points)
 PointDistance RecursiveClosetPoints(const vector<Point> &pointsX, const vector<Point> &pointsY)
 {
 	assert(pointsX.size() == pointsY.size());
-	if (pointsX.size() <= 3)
+	if (pointsX.size() <= 20)
 		return BruteForceClosetPoints(pointsX);
 	size_t mid = pointsX.size() / 2;
 	vector<Point> pointsXL(pointsX.begin(), pointsX.begin() + mid), pointsYL;
