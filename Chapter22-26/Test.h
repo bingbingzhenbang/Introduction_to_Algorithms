@@ -12,5 +12,7 @@ void testComponentGraph();
 void testEulerTour();
 void testMSTKruskal();
 void testMSTPrim();
+void testBellmanFord();
+void testDijkstra();
 
 #endif // TEST_H

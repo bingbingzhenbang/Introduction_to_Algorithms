@@ -254,3 +254,13 @@ void testMSTPrim()
 	AdjacencylistGraph g2(m2, false);
 	vector<Edge> rt2 = g2.MSTPrim(0);
 }
+
+void testBellmanFord()
+{
+
+}
+
+void testDijkstra()
+{
+
+}
