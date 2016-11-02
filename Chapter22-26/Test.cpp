@@ -257,7 +257,29 @@ void testMSTPrim()
 
 void testBellmanFord()
 {
-
+	vector< vector<int> > m1 = {
+		//     0  1  2  3  4  
+		/*0*/{ 0, 6, 0, 7, 0 },
+		/*1*/{ 0, 0, 5, 8, -4 },
+		/*2*/{ 0, -2, 0, 0, 0 },
+		/*3*/{ 0, 0, -3, 0, 9 },
+		/*4*/{ 2, 0, 7, 0, 0 },
+	};
+	AdjacencylistGraph g1(m1, true);
+	vector<int> parent1, d1;
+	g1.BellmanFord(0, parent1, d1);
+	vector< vector<int> > m2 = {
+		//     0  1  2  3  4  5
+		/*0*/{ 0, 5, 3, 0, 0, 0 },
+		/*1*/{ 0, 0, 2, 6, 0, 0 },
+		/*2*/{ 0, 0, 0, 7, 4, 2 },
+		/*3*/{ 0, 0, 0, 0, -1, 1 },
+		/*4*/{ 0, 0, 0, 0, 0, -2 },
+		/*5*/{ 0, 0, 0, 0, 0, 0 },
+	};
+	AdjacencylistGraph g2(m2, true);
+	vector<int> parent2, d2;
+	g2.BellmanFord(1, parent2, d2);
 }
 
 void testDijkstra()

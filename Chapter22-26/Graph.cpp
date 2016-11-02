@@ -528,6 +528,29 @@ void AdjacencylistGraph::RelaxEdge(std::list<Edge>::iterator &itr, std::vector<i
 	}
 }
 
+bool AdjacencylistGraph::BellmanFord(int s, std::vector<int> &parent, std::vector<int> &d)
+{
+	InitializeSingleSource(s, parent, d);
+	for (size_t k = 0; k + 1 < m_vertexes.size(); ++k)
+	{
+		for (size_t i = 0; i < m_vertexes.size(); ++i)
+		{
+			for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
+				RelaxEdge(itr, parent, d);
+		}
+	}
+	for (size_t i = 0; i < m_vertexes.size(); ++i)
+	{
+		for (auto itr = m_vertexes[i].m_edges.begin(); itr != m_vertexes[i].m_edges.end(); ++itr)
+		{
+			int u = itr->m_start, v = itr->m_end, w = itr->m_weight;
+			if (d[u] != INT_MAX && w != INT_MAX && d[v] > d[u] + w)
+				return false;
+		}
+	}
+	return true;
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {
