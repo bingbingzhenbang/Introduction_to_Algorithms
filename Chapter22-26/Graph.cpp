@@ -511,6 +511,23 @@ vector<Edge> AdjacencylistGraph::MSTPrim(int r)
 	return result;
 }
 
+void AdjacencylistGraph::InitializeSingleSource(int s, vector<int> &parent, vector<int> &d)
+{
+	parent.swap(vector<int>(m_vertexes.size(), -1));
+	d.swap(vector<int>(m_vertexes.size(), INT_MAX));
+	d[s] = 0;
+}
+
+void AdjacencylistGraph::RelaxEdge(std::list<Edge>::iterator &itr, std::vector<int> &parent, std::vector<int> &d)
+{
+	int u = itr->m_start, v = itr->m_end, w = itr->m_weight;
+	if (w != INT_MAX && d[u] != INT_MAX && d[v] > d[u] + w)
+	{
+		d[v] = d[u] + w;
+		parent[v] = u;
+	}
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {
