@@ -280,6 +280,33 @@ void testBellmanFord()
 	AdjacencylistGraph g2(m2, true);
 	vector<int> parent2, d2;
 	g2.BellmanFord(1, parent2, d2);
+	vector< vector<int> > m3 = {
+		//     0  1  2  3  4  
+		/*0*/{ 0, 10, 0, 5, 0 },
+		/*1*/{ 0, 0, 1, 2, 0 },
+		/*2*/{ 0, 0, 0, 0, 4 },
+		/*3*/{ 0, 3, 9, 0, 2 },
+		/*4*/{ 7, 0, 6, 0, 0 },
+	};
+	AdjacencylistGraph g3(m3, true);
+	vector<int> parent3, d3;
+	g3.BellmanFord(0, parent3, d3);
+}
+
+void testDagShortestPaths()
+{
+	vector< vector<int> > m2 = {
+		//     0  1  2  3  4  5
+		/*0*/{ 0, 5, 3, 0, 0, 0 },
+		/*1*/{ 0, 0, 2, 6, 0, 0 },
+		/*2*/{ 0, 0, 0, 7, 4, 2 },
+		/*3*/{ 0, 0, 0, 0, -1, 1 },
+		/*4*/{ 0, 0, 0, 0, 0, -2 },
+		/*5*/{ 0, 0, 0, 0, 0, 0 },
+	};
+	AdjacencylistGraph g2(m2, true);
+	vector<int> parent2, d2;
+	g2.DagShortestPaths(1, parent2, d2);
 }
 
 void testDijkstra()

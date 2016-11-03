@@ -16,7 +16,8 @@ int main()
 	//testEulerTour();
 	//testMSTKruskal();
 	//testMSTPrim();
-	testBellmanFord();
+	//testBellmanFord();
+	testDagShortestPaths();
 	//testDijkstra();
 	_CrtDumpMemoryLeaks();
 	return 0;

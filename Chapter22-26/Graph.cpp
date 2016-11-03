@@ -551,6 +551,17 @@ bool AdjacencylistGraph::BellmanFord(int s, std::vector<int> &parent, std::vecto
 	return true;
 }
 
+void AdjacencylistGraph::DagShortestPaths(int s, std::vector<int> &parent, std::vector<int> &d)
+{
+	InitializeSingleSource(s, parent, d);
+	list<int> sorted = TopologicalSort();
+	for (auto uitr = sorted.begin(); uitr != sorted.end(); ++uitr)
+	{
+		for (auto itr = m_vertexes[*uitr].m_edges.begin(); itr != m_vertexes[*uitr].m_edges.end(); ++itr)
+			RelaxEdge(itr, parent, d);
+	}
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {

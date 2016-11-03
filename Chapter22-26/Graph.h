@@ -76,6 +76,7 @@ public:
 	void InitializeSingleSource(int s, std::vector<int> &parent, std::vector<int> &d);
 	void RelaxEdge(std::list<Edge>::iterator &itr, std::vector<int> &parent, std::vector<int> &d);
 	bool BellmanFord(int s, std::vector<int> &parent, std::vector<int> &d);
+	void DagShortestPaths(int s, std::vector<int> &parent, std::vector<int> &d);
 };
 
 class AdjacencymatrixGraph
