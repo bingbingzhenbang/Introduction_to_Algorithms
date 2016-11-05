@@ -17,8 +17,8 @@ int main()
 	//testMSTKruskal();
 	//testMSTPrim();
 	//testBellmanFord();
-	testDagShortestPaths();
-	//testDijkstra();
+	//testDagShortestPaths();
+	testDijkstra();
 	_CrtDumpMemoryLeaks();
 	return 0;
 }

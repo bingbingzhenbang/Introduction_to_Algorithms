@@ -562,6 +562,31 @@ void AdjacencylistGraph::DagShortestPaths(int s, std::vector<int> &parent, std::
 	}
 }
 
+void AdjacencylistGraph::Dijkstra(int s, std::vector<int> &parent, std::vector<int> &d)
+{
+	InitializeSingleSource(s, parent, d);
+	vector<VertexKey> keys(m_vertexes.size(), VertexKey(0, INT_MAX));
+	for (int i = 0; i < m_vertexes.size(); ++i)
+		keys[i].m_VertexIndex = i;
+	keys[s].m_Key = 0;
+	PrimMinHeap Q(keys);
+	while (!Q.IsEmpty())
+	{
+		VertexKey top = Q.ExtractTop();
+		int u = top.m_VertexIndex;
+		d[u] = top.m_Key;
+		for (auto itr = m_vertexes[u].m_edges.begin(); itr != m_vertexes[u].m_edges.end(); ++itr)
+		{
+			int v = itr->m_end, w = itr->m_weight;
+			if (d[u] != INT_MAX && w != INT_MAX && d[v] > d[u] + w)
+			{
+				Q.ModifyKey(Q.m_IndexInHeap[v], d[u] + w);
+				parent[v] = u;
+			}
+		}
+	}
+}
+
 AdjacencymatrixGraph::AdjacencymatrixGraph()
 : m_directed(false)
 {
