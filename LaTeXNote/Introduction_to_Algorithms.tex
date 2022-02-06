@@ -1,0 +1,143 @@
+\documentclass[fancyhdr]{book}
+\usepackage[UTF8, scheme = plain]{ctex}
+\usepackage{graphicx}
+% \usepackage{epstopdf}
+\usepackage{verbatim}
+\usepackage{imakeidx}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{dcolumn}
+\usepackage{multirow}
+\usepackage{setspace}
+% \usepackage{tipa}
+\usepackage{upgreek}
+\usepackage{bm}
+\usepackage{float}
+\usepackage{mdframed}
+\usepackage{xfrac}
+\usepackage[xetex,unicode,bookmarks=true,bookmarksnumbered=true,breaklinks=true,hyperindex=true,hidelinks,bookmarksdepth=2]{hyperref}
+\usepackage{emptypage}
+\usepackage[ruled]{algorithm2e}
+\usepackage{etoolbox}
+\usepackage{braket}
+
+% index
+\makeindex[name=E,title=index,columns=2,columnsep=16pt,columnseprule,options=-s indexstyle]
+\indexsetup{othercode=\footnotesize}
+
+% bilingual index, e.g. \bindex{中间件}{zhongjianjian}{middleware}
+\newcommand{\bindex}[3]{\index[C]{#2@#1~#3}\index[E]{#3@#3 #1}}
+
+% 中文破折号
+\newcommand{\cndash}{\rule[0.35em]{2.0em}{0.05em}}
+
+% 微分算符 https://liam0205.me/2017/05/01/the-correct-way-to-use-differential-operator/
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+
+% dcolumn
+\newcolumntype{d}[1]{D{.}{.}{#1} }
+
+% Fix linespread problem in bmatrix
+\AtBeginEnvironment{bmatrix}{\linespread{1.0}\selectfont}
+
+% Page size
+\usepackage[paperwidth=188mm,paperheight=235mm,includehead,top=10mm,bottom=15mm,inner=20mm,outer=20mm]{geometry}
+
+\setlength\headheight{12pt}
+\setlength\headsep{12pt}
+
+% crop mark
+\usepackage[cam,a4,center]{crop}
+
+\usepackage{footnote}
+
+% caption font
+\usepackage{caption}
+\DeclareCaptionFont{normalfont}{\kaishu}
+\captionsetup{font=normalfont}
+
+% parargraph
+
+\setlength{\parskip}{6pt}
+
+% Foot note
+
+\setlength{\footnotesep}{8pt}
+\interfootnotelinepenalty=10000
+
+% Lists
+
+\setitemize{itemsep=3pt,topsep=0pt,parsep=0pt,partopsep=0pt}
+\setenumerate{itemsep=3pt,topsep=0pt,parsep=0pt,partopsep=0pt}
+\renewcommand{\labelitemii}{$\circ$}
+
+% Make paragraph with linebreak
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\makeatother
+
+% Fancvrb
+\RecustomVerbatimEnvironment
+  {Verbatim}{Verbatim}
+  {baselinestretch=1,fontfamily=courier}
+
+% mdframed
+\newmdenv[backgroundcolor=black!10,hidealllines=true,nobreak=true,innertopmargin=10pt,innerbottommargin=10pt]{greytext}
+
+% CJK
+
+% \CTEXsetup[number={\arabic{chapter}}]{chapter}
+% \ctexset{chapter={number=\arabic{chapter}}}
+% \CJKpunctallowbreakbetweenpuncts
+
+% algorithm
+\SetArgSty{textnormal}
+
+\title{Introduction to Algorithms}
+\author{Thomas H. Cormen}
+
+\begin{document}
+
+\pagestyle{empty}
+\maketitle
+
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\pagestyle{empty}
+\part{Foundations}
+\pagestyle{fancy}
+
+\pagestyle{empty}
+\part{Sorting and Order Statistics}
+\pagestyle{fancy}
+
+\pagestyle{empty}
+\part{Data Structures}
+\pagestyle{fancy}
+
+\setcounter{chapter}{10}
+\input{chapter11/11.tex}
+\input{chapter11/11_1.tex}
+\input{chapter11/11_2.tex}
+
+\backmatter
+
+\cleardoublepage
+\phantomsection
+\markboth{index}{index}
+\addcontentsline{toc}{chapter}{index}
+\printindex[E]
+
+\end{document}
